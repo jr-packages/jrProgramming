@@ -1,0 +1,219 @@
+
+```{r setup, include=FALSE, cache=FALSE}
+library(knitr)
+opts_knit$set(out.format = "latex")
+knit_theme$set(knit_theme$get("greyscale0"))
+
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+  if (before && options$fig.show!='none') {
+    #par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9, mgp=c(2,.7,0),tcl=-.01, las=1)
+  }}, crop=hook_pdfcrop)
+```
+
+### Basic functions
+
+Consider the following simpe function
+```{r, results="hide"}
+v = 5
+Fun1 = function() {
+  v = 0
+  return(v)
+}
+Fun1()
+v
+``` 
+1. Why does the final line return 5 and not 0.
+    ```{r echo=echo, results=results}
+    ## Fun1 uses the local variable v
+    ```
+1. Delete line 3 in the above piece of code. Now change `Fun1` to allow
+`v` to be passed as an argument, i.e. we can write `Fun1(5)`. Call
+this function to make sure it works.
+
+    ```{r echo=echo, results=results}
+    Fun1 = function(v) {
+      return(v)
+    }
+    Fun1(10)
+    ```
+
+1. Now make the argument in `Fun1` have a default value of $0$.
+
+    ```{r echo=echo, results=results}
+    Fun1 = function(v=0) {
+      return(v)
+    }
+    ``` 
+
+### Default arguments:
+
+```{r}
+Fun2 = function(x=10) {
+  return(x)
+}
+
+Fun3 = function(x) {
+  return(x)
+}
+``` 
+1. Why does 
+    ```{r eval=FALSE}
+    Fun2()
+    ```
+work, but this raises an error
+    ```{r eval=FALSE, echo=c(1,2*echo)}
+    Fun3()
+    ## Fun1()} has a default argument
+    ```
+ 
+1. Change `Fun2` so that it returns $\sqrt{x}$.
+
+    ```{r echo=echo}
+    Fun2 = function(x=10) {
+      return(sqrt(x))
+    }
+    ``` 
+
+### `if` statements.
+
+```{r }
+Fun4 = function(x) {
+  if(x==5) {
+    y = 0
+  } else {
+    y = 1
+  }
+  return(y)
+}
+``` 
+1. Change `Fun4` so that it:
+    * returns 1 if $x$ is positive;
+    * returns -1 if $x$ is negative;
+    * returns 0 if $x$ is zero.
+```{r echo=echo}
+Fun4 = function(x) {
+  rtn_value = 0
+  if(x > 0) {
+    rtn_value = 1 
+  } else if (x < 0) {
+    rtn_value = -1
+  }
+  return(rtn_value)
+}
+```   
+
+### `for` loops.
+
+```{r results="hide"}
+total = 0
+for(i in 1:5) {
+  total = total + i
+}
+total
+``` 
+
+The `for` loop above calculates 
+\[
+\sum_{i=1}^5 i = 1 + 2 + 3 + 4 + 5
+\]
+
+1. What is the final value of `total1 in the above piece of code?
+    ```{r echo=echo, results=results}
+    total
+    ```
+1. Change the above loop to calculate the following summations:
+    \[
+\mbox{(i)} \sum_{i=1}^{20} (i+1)  
+\]
+    ```{r echo=echo, results=results}
+    total = 0
+    for(i in 1:20) {
+      total = total + (i + 1)
+    }
+    total
+    ```
+\[
+\mbox{(ii)} \sum_{j=-10}^{15} j 
+\]
+    ```{r echo=echo, results=results}
+    total = 0
+    for(j in -10:15) {
+      total = total + j
+    }
+total
+```
+
+
+### More `for` loops:
+
+```{r }
+a = 2
+total = 0
+for(blob in a:5) {
+  total = total + blob
+}
+```
+
+1. In the code above, delete line 1. Now put the above code in a function called `Fun5`,
+where `a` is passed as an argument, i.e. we can call
+`Fun5(1)`
+
+    ```{r echo=echo, results=results}
+    Fun5 = function(a) {
+      total = 0
+      for(blob in a:5){
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(1)
+    ```
+
+1. Alter the code so that the `for` loop goes from `a` to
+`b`, rather than `a` to $5$. Allow `b` to be passed as an
+argument, i.e. we can call `Fun5(1,5)`.
+    ```{r echo=echo, results=results}
+    Fun5 = function(a, b) {
+      total = 0
+      for(blob in a:b){
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(1, 5)
+    ```
+
+1. Change `Fun5` so that it has default arguments of
+`a = 1` and `b = 10`.
+
+    ```{r echo=echo, results=results}
+    Fun5 = function(a=1, b=10) {
+      total = 0
+      for(blob in a:b) {
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(5)
+    ``` 
+
+
+
+## Solutions
+
+The solutions can be viewed via
+
+```{r eval=FALSE}
+library(jrProgramming)
+vignette("solutions1", package = "jrProgramming")
+```
+

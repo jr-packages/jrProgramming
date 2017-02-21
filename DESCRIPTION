@@ -1,0 +1,19 @@
+Package: jrProgramming
+Type: Package
+Title: Jumping Rivers: Introduction to Programming
+Version: 0.1.0
+Authors@R: person("Colin", "Gillespie",
+     email="colin@jumpingrivers.com", role = c("aut",
+     "cre"))
+Description: A package for the Introduction to Programming course run by Jumping
+  Rivers.
+URL: http://www.jumpingrivers.com/
+License: GPL-3
+Depends:
+    R (>= 3.0.0)
+Imports:
+    ggplot2movies
+Suggests:
+    knitr
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1

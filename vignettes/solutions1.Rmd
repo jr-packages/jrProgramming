@@ -1,0 +1,18 @@
+---
+title: "Solutions 1"
+author: "Jumping Rivers"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Solutions 1}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+```{r echo=FALSE}
+results = "show"; echo = TRUE
+```
+
+
+```{r child = 'practical1_contents.Rmd'}
+```

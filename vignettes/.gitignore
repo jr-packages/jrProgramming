@@ -1,0 +1,5 @@
+figure
+*.aux
+*.tex
+*.log
+*.out

@@ -1,0 +1,373 @@
+%\VignetteIndexEntry{practical3}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+<<echo=FALSE>>=
+results = "hide"; echo = FALSE
+@
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
+library(knitr)
+opts_knit$set(out.format = "latex")
+knit_theme$set(knit_theme$get("greyscale0"))
+
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+               dev='pdf', fig.width=5, fig.height=5, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+
+knit_hooks$set(par=function(before, options, envir){
+    if (before && options$fig.show!='none') {
+        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
+            mgp=c(2,.7,0),tcl=-.01, las=1)
+}}, crop=hook_pdfcrop)
+@
+
+\usepackage{amsmath}
+
+% Set up the images/graphics package
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{../graphics/}}
+
+\title{Programming: Practical 3} 
+\date{}  % if the \date{} command is left out, the current date will be used
+\usepackage{booktabs}
+\usepackage{units}
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\graphicspath{{../graphics/}}
+\setcounter{secnumdepth}{2}
+
+
+\usepackage{microtype}
+\begin{document}
+
+\maketitle% this prints the handout title, author, and date
+
+\begin{abstract}
+  \noindent We wish to determine the properties on which a player is most likely
+  to land during a game of monopoly. To simplify things, we assume there is only
+  a single player, ignore everything to do with money and also ignore the `Get
+  out of Jail Free Cards'.
+\end{abstract}
+
+\section{Monopoly: overview of the problem}
+
+The algorithm we will use is:
+\begin{enumerate}
+\item Begin the game on GO;
+\item \cc{current} $:=$ \cc{current} + dice roll
+\item Make a note of the new position.
+\begin{itemize}
+\item If we land on `Chance' or 'Community Chest', draw a card;
+\item If we land on `Go To Jail', move to Jail;
+\item If we move, make a note of the new position;
+\end{itemize}
+\item Go back to step 2
+\end{enumerate}
+After rolling the dice 100,000 times or so, stop.
+
+
+\section{Dice rolling}
+
+When we roll a single die, each side has an equal probability of occurring. This
+means we can use the \cc{sample} function to simulate a die roll:
+
+<<results='hide'>>=
+sample(1:6, 1)
+@ 
+
+\noindent To roll two dice, we simply call this function:
+
+<<>>=
+RollTwoDice = function() {
+  total = sample(1:6, 1) + sample(1:6, 1)
+  return(total)
+}
+@ 
+
+\noindent Call the function \cc{RollTwoDice} four times, what values did you get? \marginnote{\underline{\hspace*{4cm}}}
+
+
+\subsection{The Monopoly board}
+
+In monopoly there are forty properties or squares, see table \ref{T_1} at the
+end of this practical for a complete list. If we set the first square `Go' to be
+number 1, then we can represent all forty squares as a vector in R. For example
+
+<<>>=
+## This creates a vector of 40 values;
+## All values are initially zero
+landings = numeric(40)
+@
+
+\noindent Then, when we land on a square we simply increase the associated
+\cc{landings} entry by one. Suppose we landed on `Old Kent Rd', we would
+represent this as:
+
+<<>>=
+landings[2] = landings[2] + 1
+@ 
+
+\noindent since `Old Kent Road' is square 2 (see table \ref{T_1}).
+\begin{itemize}
+\item \textbf{Complete:} Write down the code if we landed on `Free
+Parking'?\marginnote{ \underline{\hspace*{6cm}}}\\
+\item \textbf{Complete:} Write down the code if we landed on `Mayfair'? \marginnote{\underline{\hspace*{6cm}}}
+\end{itemize}
+
+\subsection{Going round the board}
+
+Our first go at simulating Monopoly will ignore community chest, chance cards,
+and the `Go To Jail' square. This means that we are simply going round the
+board. The code in the \cc{SimulateMonopoly} function, rolls the dice \cc{no\_of\_rolls} time, and stores the squares that are landed on in the vector \cc{landings}. 
+
+<<>>=
+SimulateMonopoly = function(no_of_rolls) {    
+  landings = numeric(40)
+  ## Start at GO
+  current = 1
+  for(i in 1:no_of_rolls) {
+    current = current + RollTwoDice()
+    if(current > 40) {
+      current = current - 40
+    }
+    landings[current] = landings[current] + 1
+  }
+  return(landings)
+}
+no_of_rolls = 50000
+@
+<<echo=FALSE>>=
+no_of_rolls = 100
+@
+
+\noindent We can then call the function using:
+<<>>=
+sim = SimulateMonopoly(no_of_rolls)
+@
+
+<<echo=FALSE>>=
+# no_of_rolls = 2000000
+# sim1 = SimulateMonopoly(no_of_rolls)
+# saveRDS(sim1, file="vignettes/sim1.RData")
+sim = readRDS("sim1.RData")
+@
+
+
+\noindent We can then plot the results
+<<F1, fig.keep='none', tidy=FALSE>>=
+plot(sim/sum(sim), ylim=c(0, 0.06), type='l', 
+        xlab="Square", ylab="Probability")
+@ 
+
+
+\begin{marginfigure}
+\centering
+<<ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Probability of landing on monopoly square.}
+\end{marginfigure}
+
+\begin{itemize}
+\item What does \cc{landings = numeric(40)} do?\marginnote\underline{\hspace*{6cm}}\\
+\item What's the purpose of: \marginnote{\underline{\hspace*{6cm}}}\\
+
+<<eval=FALSE>>=
+if(current > 40) {
+   current = current - 40
+}
+@
+\item Why do we divide by \cc{sum(sim)} above? \marginnote{\underline{\hspace*{6cm}}}\\
+\item What happens to the plot as you increase \cc{no\_of\_rolls}? \marginnote{\underline{\hspace*{6cm}}}\\
+\item What values are the probabilities converging to?
+\marginnote{\underline{\hspace*{6cm}}}\\
+\end{itemize}
+
+
+\subsection{Incorporating Community Chest Cards}
+
+There are three community chest squares on the board - squares 3, 18 and 34. In
+the code below we will just consider square 3. There are sixteen cards in total,
+hence the probability of drawing any particular card is 1/16. In the code below
+we will \textbf{only implement the first two community chest cards}:
+
+<<>>=
+CommunityChest = function(current) {
+  goto = current
+  u = runif(1)
+  if(u < 1/16) {
+    goto = 1#Move to Go
+  }else if(u < 2/16) {
+    goto = 11#Go To Jail  :(
+  }
+  return(goto)
+}
+@ 
+
+\noindent This function takes in the \cc{current} position, with probability
+1/16 we `Move to Go', with probability 1/16 we `Go to Jail' and with probability
+14/16 we stay in our current position. We now alter the \cc{simulate} function
+to incorporate the \cc{CommunityChest} function:
+
+<<>>=
+SimulateMonopoly = function(no_of_rolls) {    
+  landings = numeric(40)
+  ## Start at GO
+  current = 1
+  for(i in 1:no_of_rolls) {
+    current = current + RollTwoDice()
+    if(current > 40) {
+      current = current - 40
+    }
+    landings[current] = landings[current] + 1
+    if(current == 3) {
+      cc_move = CommunityChest(current)
+      if(cc_move != current){
+        current = cc_move
+        landings[current] = landings[current] + 1
+      }
+    }
+  }
+  return(landings)
+}
+@ 
+
+\noindent We can then call this function:
+
+<<>>=
+sim2 = SimulateMonopoly(no_of_rolls)
+@
+<<echo=FALSE>>=
+# no_of_rolls = 2000000
+# sim2 = SimulateMonopoly(no_of_rolls)
+# saveRDS(sim2, file="vignettes/sim2.RData")
+sim2 = readRDS("sim2.RData")
+@
+
+
+\noindent and plot
+
+<<F2, fig.keep='none', tidy=FALSE>>=
+plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l", 
+     xlab="Square", ylab="Probability")
+@ 
+
+\begin{marginfigure}
+\centering
+<<ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE>>=
+@
+\caption{Probability of landing on monopoly square with the first community chest card implemented. Incorporating a single cummunity chest card has very little effect. For this graphic, I used 2 million simulations! }
+\end{marginfigure}
+
+\noindent What is the the rationale for lines 14--20?
+
+\section{Additional questions}
+
+Each question adds an additional layer of complexity to your code.  
+\begin{enumerate}
+\item Add in the two other community squares, i.e. squares 18 and 34 into the \cc{SimulateMonopoly} code.
+\item Add in `Go to Old Kent Road' into your \cc{CommunityChest} function.
+\item Square 31 is `Go To Jail.' Implement this in your main simulation function.
+\item Create a \cc{Chance} function, that implements the first six Chance
+  cards. When you land on a Chance square, call this function.
+\item Add in Community Chest card four.
+\item Add in Chance card 8.
+\item Add in Chance card 7, `Go back 3 spaces'.
+\item Rolling a double (a pair of 1's, 2's, ..., 6's) is special: 
+\begin{enumerate}
+\item Roll two dice (\cc{total1}):  \cc{total\_score = total1}
+\item If you get a double, roll again (\cc{total2}) and \cc{total\_score = total1 + total2}
+\item If you get a double, roll again (\cc{total3}) and \cc{total\_score = total1 + total2 + total3}
+\item If roll three is a double, Go To Jail, otherwise move \cc{total\_score }
+\end{enumerate}
+\end{enumerate}
+
+
+\newpage
+\section{Additional Information}
+
+\subsection*{Community Chest Cards}
+
+There are three community chest areas on the board (see Table \ref{T_1}). In
+total, there are 16 community chest cards.
+\begin{enumerate}
+\item Advance to Go;
+\item Go to jail;
+\item Go to Old Kent Road;
+\item Take a Chance card instead;
+\end{enumerate}
+
+
+\subsection*{Chance Cards}
+
+A Chance card is most likely to move players. There are three chance areas on the board (see Table \ref{T_1}). There are 16 chance cards in total, of which eight cards move the player:
+\begin{enumerate}
+\item Advance to Go;
+\item Advance to Trafalgar Square;
+\item Advance to Pall Mall;
+\item Go directly to Jail;
+\item Take a trip to Marylebone Station;
+\item Advance to Mayfair;
+\item Go back 3 spaces;
+\item Advance token to nearest Utility. The utility squares are the water works
+  and the electric company.
+\end{enumerate}
+
+
+
+\begin{table}[!b]
+  \resizebox{\textwidth}{!}{%
+    \centering
+    \begin{tabular}{@{}llll@{}}
+      \toprule
+      Square Number & Name & Square Number & Name \\
+      \midrule
+1 & Go & 11 & Jail  \\
+2 & Old Kent Road & 12 & Pall Mall \\
+3 & {\color{blue} Community Chest} & 13 & Electric Company \\
+4 & WhiteChapel Road & 14 & Whitehall \\
+5 & Income Tax & 15 & Northumberland Avenue \\
+6 & King's Cross Station & 16 & Marylebone Station \\
+7 & The Angel Islington & 17 & Bow Street \\
+8 & {\color{red} Chance} & 18 & {\color{blue} Community Chest} \\
+9 & Euston Road & 19 & Marlborough Street \\
+10 & Pentonville Road & 20 & Vine Street \\
+\midrule
+21 & Free Parking & 31 & Go To Jail \\
+22 & Strand & 32 & Regent Street \\
+23 & {\color{red} Chance} & 33 & Oxford Street \\
+24 & Fleet Street & 34 &  {\color{blue} Community Chest} \\
+25 & Trafalgar Square & 35 & Bond Street \\
+26 & Fenchurch Street Station & 36 & Liverpool St Station \\
+27 & Leicester Square & 37 & {\color{red} Chance} \\
+28 & Coventry St & 38 & Park Lane \\
+29 & Water Works & 39 & Super Tax \\
+30 & Piccadilly & 40 & Mayfair \\
+\bottomrule
+\end{tabular}}
+\caption{Monopoly squares with associated square numbers}\label{T_1}
+\end{table}
+
+
+
+\section*{Solutions}
+
+Solutions are contained within this package:
+<<eval=FALSE>>=
+vignette("monopoly_solutions", package = "jrProgramming")
+@
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "practicals"
+%%% End: 
