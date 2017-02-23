@@ -8,6 +8,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+## Practical 1 Solutions
 
 ```{r echo=FALSE}
 results = "show"; echo = TRUE

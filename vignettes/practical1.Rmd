@@ -8,6 +8,9 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+
+## Practical 1
+
 ```{r echo=FALSE}
 results = "hide"; echo = FALSE
 ```
