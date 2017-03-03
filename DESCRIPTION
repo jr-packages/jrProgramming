@@ -14,6 +14,10 @@ Depends:
 Imports:
     ggplot2movies
 Suggests:
+<<<<<<< HEAD
     knitr, tidyverse
+=======
+    knitr, tufte, rmarkdown
+>>>>>>> 5b3c388466748c1903bc0743f7d893fcdadbf81e
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
