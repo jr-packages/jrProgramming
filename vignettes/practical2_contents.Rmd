@@ -1,0 +1,207 @@
+```{r, include = FALSE, cache = FALSE}
+library(knitr)
+# opts_knit$set(out.format = "latex")
+knit_theme$set(knit_theme$get("greyscale0"))
+
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+                fig.width=4, fig.height=4, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+suppressPackageStartupMessages(library(tidyverse))
+```
+
+In this question, we are going to use a \cc{for} statement to
+\cc{loop} over a large data set and construct some scatter plots. To generate
+the data, run the following piece of R code
+
+```{r echo=TRUE}
+data(experiment, package = "jrProgramming")
+head(exper)
+``` 
+
+The data frame `exper` represents an experiment, where we have ten treatments:
+$A, B, \ldots, J$ and measurements at some time points. We want to create a
+scatter plot of measurement against time, for each treatment type.
+
+1. First we create a scatter plot of one treatment:
+
+    ```{r F1, echo=TRUE, eval=TRUE, tidy=FALSE}
+    plot(exper[exper$treat=="A",]$time, exper[exper$treat=="A",]$values)
+    ``` 
+   
+ 
+1. To generate a scatter-plot for each treatment, we need to iterate over the different
+treatment types:
+
+    ```{r results='hide', fig.keep='none', tidy=FALSE}
+    for(treat in unique(exper$treat)) {
+      plot(exper[exper$treat==treat,]$time, exper[exper$treat==treat,]$values)
+      readline("Hit return for next plot\n")
+    }
+    ``` 
+    * What does `unique(exper$treat)` give?
+        ```{r}
+        ## It gives all treatments.
+        ```
+    * In the `for` loop, what variable is changing? What are it's possible values?
+        ```{r ```}
+        #The treat variable is changing. It goes through the different treatments.
+        ```
+    * What does the `readline()` function do?
+
+
+### Questions
+
+1. The default axis labels aren't great. So we can change the $x$-axis label using \cc{xlab}:
+    ```{r fig.keep='none', tidy=FALSE, echo=TRUE}
+    plot(exper[exper$treat==treat,]$time, exper[exper$treat==treat,]$values, xlab="Time")
+    ```
+    ```{r}
+    plot(exper[exper$treat==treat,]$time, exper[exper$treat==treat,]$values, 
+         xlab="Time", ylab="Measurement")
+    ```
+    Use the `ylab` argument to alter the $y$-axis label.
+
+1. To aexper a title to a plot we use the `main` argument, viz:
+
+    ```{r F2, tidy=FALSE}
+    plot(exper[exper$treat=="A",]$time, exper[exper$treat=="A",]$values, 
+      main="Treatment", xlab="Time", ylab="Measurement")
+    ```
+
+    We can combine strings/characters using the `paste()` function,
+
+    ```{r }
+    paste("Treatment", treat)
+    ```
+
+    Rather than have a static title, make the title of each plot display the treatment type.
+
+    ```{r fig.keep='none', tidy=FALSE}
+    plot(exper[exper$treat==treat,]$time, exper[exper$treat==treat,]$values, 
+      main=paste("Treament", treat),
+      xlab="Time", ylab="Measurement")
+    ``` 
+
+1. The y-axis range should really be the same in all graphics. Aexper a `ylim` argument 
+to fix the range. __Hint__: Work out the range before the `for` loop.
+
+    ```{r  fig.keep='none', tidy=FALSE}
+    range(exper$values)
+    plot(exper[exper$treat==treat,]$time, exper[exper$treat==treat,]$values, 
+      main=paste("Treament", treat), xlab="Time", ylab="Measurement",
+      ylim=c(-2, 10))
+    ``` 
+
+
+1. At each iteration, use the \cc{message()} function to print the average measurement level across all time points.
+
+    ```{r results='hide', message=FALSE}
+    ##Within the for loop have the line
+    message(mean(exper[exper$treat==treat,]$values))
+    ```
+
+1. On each graph, highlight any observations with a blue point if they are
+larger than the mean + standard deviations or less than the mean - 
+  standard deviations. Use the `points()` function to highlight a point.
+  __Hint__: You don't need `if` statements here. 
+  Just subset your data frame and pass this new data frame to the points function.
+  For example, to highlight the points (1,2) and (3, 4) we use the command:
+  
+    ```{r echo=-1, fig.keep='none'}
+    plot(0)
+    points(c(1, 3), c(2, 4), col=2)
+    ```
+  
+    ```{r fig.keep='none', message=FALSE, tidy=FALSE}
+    sel = (exper$treat == treat)
+    plot(exper[sel,]$time, exper[sel,]$values,
+      ylab=treat, xlab="Time",
+      main=paste("Treatment", treat))
+    ##Select a particular treament
+    sel = (exper$treat == treat)
+    
+    ##Calculate the limits
+    values = exper[sel,]$values
+    message(mean(values))
+    upper_lim = mean(values) + sd(values)
+    lower_lim = mean(values) - sd(values)
+    
+    ##Extract the points
+    up_row = exper[sel & exper$values > upper_lim,]
+    low_row = exper[sel & exper$values < lower_lim,]
+    
+    ##pch=19 gives a solid dot
+    ##See ?points
+    points(up_row$time, up_row$values, col=4, pch=19)
+    points(low_row$time, low_row$values, col=4, pch=19)
+    ```
+  
+
+1. Suppose we wanted to save individual graphs. Aexper in the `pdf()`
+function to save the resulting graph. To get unique file names, use the paste
+command:
+
+    ```{r}
+    filename = paste0("file", treat, ".pdf")
+    ```
+1. Put your code, i.e. the `for` loop and plotting commands, in a function which takes the data frame as an argument.
+1. Alter your function to take another argument where you can save the graph
+in a different directory.
+
+
+
+
+### Solutions
+
+Solutions are contained within this package:
+```{r eval=FALSE}
+vignette("solutions2", package = "jrProgramming")
+```
+
+
+```{r tidy=FALSE}
+## FULL SOLUTION
+viewgraphs = function(exper, colour=TRUE, save=FALSE) {
+  for(treat in unique(exper$treat)) {
+    if(save) {
+      filename = paste("file", treat, ".pdf", sep="")
+      pdf(filename)
+    }
+    
+    ##Use a different shape in the points
+    if(colour) pch = 19
+    else pch = 22
+    
+    ##Do selection one
+    sel = (exper$treat == treat)
+    plot(exper[sel,]$time, exper[sel,]$values,
+         ylab=treat, xlab="Time",
+         main=paste("Treatment", treat))
+    
+    ##Calculate the limits
+    values = exper[sel,]$values
+    message(mean(values))
+    upper_lim = mean(values) + sd(values)
+    lower_lim = mean(values) - sd(values)
+    
+    ##Extract the points
+    up_row = exper[sel & exper$values > upper_lim,]
+    low_row = exper[sel & exper$values < lower_lim,]
+    
+    ##pch=19 gives a solid dot
+    ##See ?points
+    points(up_row$time, up_row$values, col=4, pch=19)
+    points(low_row$time, low_row$values, col=4, pch=19)
+    if(save){
+      dev.off()
+    } else {  
+      readline("Hit return for next plot\n")
+    }
+  }
+}
+```

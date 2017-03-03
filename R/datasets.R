@@ -1,16 +1,16 @@
-#' Dummy data set
+#' Experiment data set
 #' 
 #' This data frame dummy_data represents an experiment, 
 #' where we have ten treatments:
 #' A, B, ..., J and measurements at some time points. 
 #' We want to create a scatter plot of measurement against time, 
 #' for each treatment type.
-#' @name dummy_data
-#' @aliases dummy_data
+#' @name experiment
+#' @aliases exper
 #' @docType data
-#' @usage data(dummy_data)
+#' @usage data(experiment)
 #' @return A data frame 
 #' @keywords datasets
 #' @examples
-#' data(dummy_data)
+#' data(experiment)
 NULL
