@@ -22,7 +22,7 @@ knit_hooks$set(par=function(before, options, envir){
 ### Basic functions
 
 Consider the following simple function
-```{r, results="hide"}
+```{r}
 v = 5
 Fun1 = function() {
   v = 0
@@ -31,6 +31,7 @@ Fun1 = function() {
 Fun1()
 v
 ``` 
+
 1. Why does the final line return 5 and not 0.
     ```{r }
     ## Fun1 uses the local variable v
@@ -65,15 +66,15 @@ Fun3 = function(x) {
   return(x)
 }
 ``` 
+
 1. Why does 
-    ```{r eval=FALSE}
-    Fun2()
-    ```
+```r
+Fun2()
+```
 work, but this raises an error
-    ```{r eval=FALSE, echo=c(1,2*knitr::opts_chunk$get("echo"))}
-    Fun3()
-    ## Fun1() has a default argument
-    ```
+```{r eval=FALSE, echo=c(1,2*knitr::opts_chunk$get("echo"))}
+Fun3()
+```
  
 1. Change `Fun2` so that it returns $\sqrt{x}$.
 
@@ -95,6 +96,7 @@ Fun4 = function(x) {
   return(y)
 }
 ``` 
+
 1. Change `Fun4` so that it:
     * returns 1 if $x$ is positive;
     * returns -1 if $x$ is negative;
@@ -126,7 +128,7 @@ The `for` loop above calculates
 \sum_{i=1}^5 i = 1 + 2 + 3 + 4 + 5
 \]
 
-1. What is the final value of `total1 in the above piece of code?
+1. What is the final value of `total1` in the above piece of code?
     ```{r }
     total
     ```
@@ -134,6 +136,7 @@ The `for` loop above calculates
     \[
 \mbox{(i)} \sum_{i=1}^{20} (i+1)  
 \]
+
     ```{r }
     total = 0
     for(i in 1:20) {
@@ -141,16 +144,18 @@ The `for` loop above calculates
     }
     total
     ```
+    
 \[
 \mbox{(ii)} \sum_{j=-10}^{15} j 
 \]
-    ```{r }
+
+  ```{r }
     total = 0
     for(j in -10:15) {
       total = total + j
     }
-total
-```
+  total
+  ```
 
 
 ### More `for` loops:
