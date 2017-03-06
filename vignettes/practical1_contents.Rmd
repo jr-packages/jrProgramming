@@ -216,6 +216,32 @@ argument, i.e. we can call `Fun5(1,5)`.
     ``` 
 
 
+## Multiple t-tests
+
+In the notes, we observed that it was straight forward to
+loop through a data set set and select the maximum values:
+
+```{r echo=TRUE}
+dd = data.frame(x = rnorm(10), y = rnorm(10), z = rnorm(10))
+
+max_cols = numeric(ncol(dd))
+for(i in seq_along(dd)) {
+  max_cols[i] = max(dd[, i])
+}
+max_cols
+```
+
+ * Alter the above the code to calculate the `mean` instead of the maximum value
+ * Now, calculate the standard deviation (via `sd`) as well as the mean. 
+ You should only have a single loop!
+ 
+```{r}
+means = sds = numeric(ncol(dd))
+for(i in seq_along(dd)) {
+  means[i] = mean(dd[, i])
+  sds[i] = sd(dd[, i])
+}
+```
 
 ## Solutions
 
