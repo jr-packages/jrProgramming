@@ -19,10 +19,13 @@ knit_hooks$set(par=function(before, options, envir){
   }}, crop=hook_pdfcrop)
 ```
 
-### Basic functions
+The aim of this practical is to understand the syntax of functions and 
+loops. In practical 2, we will use this knowledge in a larger example.
+
+# Basic functions
 
 Consider the following simple function
-```{r}
+```{r echo=TRUE}
 v = 5
 Fun1 = function() {
   v = 0
@@ -36,29 +39,22 @@ v
     ```{r }
     ## Fun1 uses the local variable v
     ```
-1. Delete line 3 in the above piece of code. Now change `Fun1` to allow
+1. Delete line 3 in the above piece of code. Now change `Fun1()` to allow
 `v` to be passed as an argument, i.e. we can write `Fun1(5)`. Call
 this function to make sure it works.
 
-    ```{r }
+    ```{r}
     Fun1 = function(v) {
       return(v)
     }
     Fun1(10)
     ```
 
-1. Now make the argument in `Fun1` have a default value of $0$.
 
-    ```{r }
-    Fun1 = function(v=0) {
-      return(v)
-    }
-    ``` 
+## Default arguments:
 
-### Default arguments:
-
-```{r}
-Fun2 = function(x=10) {
+```{r echo=TRUE}
+Fun2 = function(x = 10) {
   return(x)
 }
 
@@ -68,25 +64,25 @@ Fun3 = function(x) {
 ``` 
 
 1. Why does 
-```r
-Fun2()
-```
-work, but this raises an error
-```{r eval=FALSE, echo=c(1,2*knitr::opts_chunk$get("echo"))}
-Fun3()
-```
+    ```{r echo=TRUE}
+    Fun2()
+    ```
+    work, but this raises an error
+    ```{r eval=FALSE, echo=TRUE}
+    Fun3()
+    ```
  
-1. Change `Fun2` so that it returns $\sqrt{x}$.
+1. Change `Fun2` so that it returns `x*x`.
 
     ```{r }
-    Fun2 = function(x=10) {
-      return(sqrt(x))
+    Fun2 = function(x = 10) {
+      return(x*x)
     }
     ``` 
 
-### `if` statements.
+## `if` statements.
 
-```{r }
+```{r echo=TRUE}
 Fun4 = function(x) {
   if(x==5) {
     y = 0
@@ -97,10 +93,12 @@ Fun4 = function(x) {
 }
 ``` 
 
-1. Change `Fun4` so that it:
-    * returns 1 if $x$ is positive;
-    * returns -1 if $x$ is negative;
-    * returns 0 if $x$ is zero.
+Change `Fun4` so that it:
+
+  * returns 1 if $x$ is positive;
+  * returns -1 if $x$ is negative;
+  * returns 0 if $x$ is zero.
+
 ```{r }
 Fun4 = function(x) {
   rtn_value = 0
@@ -113,9 +111,9 @@ Fun4 = function(x) {
 }
 ```   
 
-### `for` loops.
+## `for` loops.
 
-```{r results="hide"}
+```{r results="hide", echo=TRUE}
 total = 0
 for(i in 1:5) {
   total = total + i
@@ -128,7 +126,7 @@ The `for` loop above calculates
 \sum_{i=1}^5 i = 1 + 2 + 3 + 4 + 5
 \]
 
-1. What is the final value of `total1` in the above piece of code?
+1. What is the final value of `total` in the above piece of code?
     ```{r }
     total
     ```
@@ -156,11 +154,17 @@ The `for` loop above calculates
     }
   total
   ```
+1. Rewrite the two loops using the `sum()` function. For example, the for loop in the first
+example can be written as `sum(1:5)`
 
+    ```{r}
+    sum(2:21)
+    sum(-10:15)
+    ```
 
-### More `for` loops:
+## More `for` loops:
 
-```{r }
+```{r echo=TRUE}
 a = 2
 total = 0
 for(blob in a:5) {
