@@ -39,7 +39,7 @@ scatter plot of measurement against time, for each treatment type.
 1. To generate a scatter-plot for each treatment, we need to iterate over the different
 treatment types:
 
-    ```{r results='hide', fig.keep='none', tidy=FALSE}
+    ```{r results='hide', fig.keep='none', tidy=FALSE, echo = TRUE}
     for(treatment in unique(exper$treat)) {
       group = filter(exper, treat == treatment)
       plot(group$time, group$values)
@@ -51,10 +51,15 @@ treatment types:
         ## It gives all treatments.
         ```
     * In the `for` loop, what variable is changing? What are it's possible values?
-        ```{r ```}
-        #The treat variable is changing. It goes through the different treatments.
+        ```{r}
+        ## The treat variable is changing. 
+        ## It goes through the different treatments.
         ```
     * What does the `readline()` function do?
+        
+        ```{r}
+        ## It halts execution, waits for user input
+        ```
 
 
 ### Questions
@@ -151,7 +156,7 @@ command:
 ### Solutions
 
 Solutions are contained within this package:
-```{r eval=FALSE}
+```{r eval=FALSE, echo=TRUE}
 vignette("solutions2", package = "jrProgramming")
 ```
 

@@ -71,7 +71,13 @@ Fun3 = function(x) {
     ```{r eval=FALSE, echo=TRUE}
     Fun3()
     ```
- 
+
+    ```{r}
+    ## Fun3 expects an argument x, but 
+    ## we haven't given one and there is
+    ## no default.
+    ```
+
 1. Change `Fun2` so that it returns `x*x`.
 
     ```{r }
@@ -147,13 +153,13 @@ The `for` loop above calculates
 \mbox{(ii)} \sum_{j=-10}^{15} j 
 \]
 
-  ```{r }
+    ```{r }
     total = 0
     for(j in -10:15) {
       total = total + j
     }
-  total
-  ```
+    total
+    ```
 1. Rewrite the two loops using the `sum()` function. For example, the for loop in the first
 example can be written as `sum(1:5)`
 
