@@ -1,0 +1,20 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# Programming with R
+[![Build Status](https://api.travis-ci.org/jr-packages/jrProgramming.png?branch=master)](https://travis-ci.org/jr-packages/jrProgramming.png)
+
+Course material for the [Programming with R](https://www.jumpingrivers.com) course. 
