@@ -35,7 +35,7 @@ Fun1()
 v
 ``` 
 
-1. Why does the final line return 5 and not 0.
+1. Why does the final line return 0 and not 5.
     ```{r }
     ## Fun1 uses the local variable v
     ```
