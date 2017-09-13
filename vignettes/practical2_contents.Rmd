@@ -126,7 +126,7 @@ larger than the mean + standard deviations or less than the mean -
   
     ```{r fig.keep='none', message=FALSE, tidy=FALSE}
      plot(group$time, group$values,
-      ylab=treatment, xlab="Time",
+      ylab = "Measurement", xlab="Time",
       main=paste("Treatment", treatment))
 
     ##Calculate the limits
@@ -171,7 +171,7 @@ viewgraphs = function(exper,  save=FALSE) {
     }
     
    plot(group$time, group$values,
-      ylab=treat, xlab="Time",
+      ylab="Measurement", xlab="Time",
       main=paste("Treatment", treat))
 
     ##Calculate the limits

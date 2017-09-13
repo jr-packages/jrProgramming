@@ -32,7 +32,6 @@ Fun1 = function() {
   return(v)
 }
 Fun1()
-v
 ``` 
 
 1. Why does the final line return 0 and not 5.
