@@ -11,7 +11,6 @@ opts_chunk$set(fig.path='figure/graphics-',
                 fig.width=4, fig.height=4, 
                fig.show='hold', cache=FALSE, par=TRUE)
 knit_hooks$set(crop=hook_pdfcrop)
-suppressPackageStartupMessages(library(tidyverse))
 ```
 
 In this question, we are going to use a `for` statement to
@@ -29,7 +28,7 @@ scatter plot of measurement against time, for each treatment type.
 
 1. First we create a scatter plot of one treatment:
 
-    ```{r F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE}
+    ```{r F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"}
     library(dplyr)
     treat_a = filter(exper, treat == "A")
     plot(treat_a$time, treat_a$values)
@@ -39,7 +38,11 @@ scatter plot of measurement against time, for each treatment type.
 1. To generate a scatter-plot for each treatment, we need to iterate over the different
 treatment types:
 
-    ```{r results='hide', fig.keep='none', tidy=FALSE, echo = TRUE}
+    ```{r echo=FALSE}
+    treatment = tail(exper, 1)$treat
+    group = filter(exper, treat == treatment)
+    ```
+    ```{r results='hide', fig.keep='none', tidy=FALSE, echo = TRUE, eval=FALSE}
     for(treatment in unique(exper$treat)) {
       group = filter(exper, treat == treatment)
       plot(group$time, group$values)
@@ -62,13 +65,13 @@ treatment types:
         ```
 
 
-### Questions
+## Questions
 
 1. The default axis labels aren't great. So we can change the $x$-axis label using `xlab`:
     ```{r fig.keep='none', tidy=FALSE, echo=TRUE}
      plot(group$time, group$values, xlab="Time")
     ```
-    ```{r}
+    ```{r, fig.keep="none"}
     plot(group$time, group$values,
          xlab="Time", ylab="Measurement")
     ```
@@ -76,7 +79,7 @@ treatment types:
 
 1. To add a title to a plot we use the `main` argument, viz:
 
-    ```{r F2, tidy=FALSE}
+    ```{r F2, tidy=FALSE, fig.keep="none"}
      plot(group$time, group$values, 
       main="Treatment", xlab="Time", ylab="Measurement")
     ```
@@ -153,7 +156,7 @@ command:
 1. Put your code, i.e. the `for` loop and plotting commands, in a function which takes the data frame as an argument.
 
 
-### Solutions
+## Solutions
 
 Solutions are contained within this package:
 ```{r eval=FALSE, echo=TRUE}
