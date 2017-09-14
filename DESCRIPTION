@@ -10,10 +10,10 @@ Description: A package for the Introduction to Programming course run by Jumping
 URL: http://www.jumpingrivers.com/
 License: GPL-3
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.2.0)
 Imports:
-    ggplot2movies
+    ggplot2movies, dplyr
 Suggests:
-    knitr, tufte, rmarkdown,  dplyr, formatR
+    knitr, tufte, rmarkdown, formatR
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
