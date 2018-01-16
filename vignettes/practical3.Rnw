@@ -92,8 +92,6 @@ RollTwoDice = function() {
 }
 @ 
 
-\noindent Call the function \cc{RollTwoDice} four times, what values did you get? \marginnote{\underline{\hspace*{4cm}}}
-
 
 \subsection{The Monopoly board}
 
@@ -116,11 +114,7 @@ landings[2] = landings[2] + 1
 @ 
 
 \noindent since `Old Kent Road' is square 2 (see table \ref{T_1}).
-\begin{itemize}
-\item \textbf{Complete:} Write down the code if we landed on `Free
-Parking'?\marginnote{ \underline{\hspace*{6cm}}}\\
-\item \textbf{Complete:} Write down the code if we landed on `Mayfair'? \marginnote{\underline{\hspace*{6cm}}}
-\end{itemize}
+
 
 \subsection{Going round the board}
 
@@ -174,21 +168,6 @@ plot(sim/sum(sim), ylim=c(0, 0.06), type='l',
 @
 \caption{Probability of landing on monopoly square.}
 \end{marginfigure}
-
-\begin{itemize}
-\item What does \cc{landings = numeric(40)} do?\marginnote\underline{\hspace*{6cm}}\\
-\item What's the purpose of: \marginnote{\underline{\hspace*{6cm}}}\\
-
-<<eval=FALSE>>=
-if(current > 40) {
-   current = current - 40
-}
-@
-\item Why do we divide by \cc{sum(sim)} above? \marginnote{\underline{\hspace*{6cm}}}\\
-\item What happens to the plot as you increase \cc{no\_of\_rolls}? \marginnote{\underline{\hspace*{6cm}}}\\
-\item What values are the probabilities converging to?
-\marginnote{\underline{\hspace*{6cm}}}\\
-\end{itemize}
 
 
 \subsection{Incorporating Community Chest Cards}
@@ -266,7 +245,7 @@ plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l",
 \caption{Probability of landing on monopoly square with the first community chest card implemented. Incorporating a single cummunity chest card has very little effect. For this graphic, I used 2 million simulations! }
 \end{marginfigure}
 
-\noindent What is the the rationale for lines 14--20?
+\noindent What is the the rationale for lines 14-20?
 
 \section{Additional questions}
 
