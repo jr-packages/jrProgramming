@@ -1,12 +1,12 @@
 ---
-title: "Practical 2"
+title: "Practical 2 Stats"
 author: "Jumping Rivers"
 output:
   tufte::tufte_handout:
     latex_engine: xelatex
   tufte::tufte_html: default
 vignette: >
-  %\VignetteIndexEntry{Practical 2}
+  %\VignetteIndexEntry{Practical 2 stats}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

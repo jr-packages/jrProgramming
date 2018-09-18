@@ -16,7 +16,7 @@ opts_chunk$set(fig.path='figure/graphics-',
 knit_hooks$set(crop=hook_pdfcrop)
 
 ## ----echo=TRUE----------------------------------
-data(GoTRating, package = "jrData")
+data(GoTRating, package = "jrProgramming")
 head(GoTRating)
 
 ## ----F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"----

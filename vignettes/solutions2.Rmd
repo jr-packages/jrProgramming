@@ -1,9 +1,9 @@
 ---
-title: "Practical 2: solutions"
+title: "Practical 2 Stats: solutions"
 author: "Jumping Rivers"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Practical 2 Solutions}
+  %\VignetteIndexEntry{Practical 2 Stats Solutions}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
