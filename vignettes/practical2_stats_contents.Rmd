@@ -69,21 +69,20 @@ plot(group$Episode, group$Rating, xlab="Episode")
 plot(group$Episode, group$Rating,
      xlab="Episode", ylab="Rating")
 ```
-    Use the `ylab` argument to alter the $y$-axis label.
+Use the `ylab` argument to alter the $y$-axis label.
 
 2. To add a title to a plot we use the `main` argument, viz:
 
-```{r F2, tidy=FALSE, fig.keep="none"}
+```{r F2, tidy=FALSE, fig.keep="none", echo = TRUE}
      plot(group$Episode, group$Rating, 
-      main="Season", xlab="Episode", ylab="Rating")
+      main="Season", xlab="Episode")
 ```
 
 We can combine strings/characters using the `paste()` function,
 
-```{r }
+```{r , echo = TRUE}
     paste("Season", i)
 ```
-
 Rather than have a static title, make the title of each plot display the season number.
 
 ```{r fig.keep='none', tidy=FALSE}
