@@ -1,0 +1,189 @@
+```{r, include = FALSE, cache = FALSE}
+library(knitr)
+# opts_knit$set(out.format = "latex")
+knit_theme$set(knit_theme$get("greyscale0"))
+
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+                fig.width=4, fig.height=4, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+```
+
+In this question, we are going to use a `for` statement to
+loop} over the game of thrones data set and construct some scatter plots. To generate the data, run the following piece of R code
+
+```{r echo=TRUE}
+data(GoTRating, package = "jrProgramming")
+head(GoTRating)
+``` 
+
+The data represents tv ratings for the first 6 seasons of the popular tv series, Game of Thrones. We want to create a
+scatter plot of Rating against Episode, for each Season.
+
+1. First we create a scatter plot of one treatment:
+
+    ```{r F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"}
+    library(dplyr)
+    s_1 = filter(GoTRating, Season == 1)
+    plot(s_1$Episode, s_1$Rating)
+    ``` 
+   
+ 
+1. To generate a scatter-plot for each treatment, we need to iterate over the different
+treatment types:
+
+    ```{r results='hide', fig.keep='none', tidy=FALSE, echo = TRUE}
+    for(i in unique(GoTRating$Season)) {
+      group = filter(GoTRating, Season == i)
+      plot(group$Episode, group$Rating)
+      readline("Hit return for next plot")
+    }
+    ``` 
+    * What does `unique(GoTRating$Season)` give?
+        ```{r}
+        ## It gives all Seasons.
+        ```
+    * In the `for` loop, what variable is changing? What are it's possible values?
+        ```{r}
+        ## The Season variable is changing. 
+        ## It goes through the different Seasons.
+        ```
+    * What does the `readline()` function do?
+        
+        ```{r}
+        ## It halts execution, waits for user input
+        ```
+
+
+## Questions
+
+1. The default axis labels aren't great. So we can change the $x$-axis label using `xlab`:
+```{r fig.keep='none', tidy=FALSE, echo=TRUE}
+plot(group$Episode, group$Rating, xlab="Episode")
+```
+```{r, fig.keep="none"}
+plot(group$Episode, group$Rating,
+     xlab="Episode", ylab="Rating")
+```
+    Use the `ylab` argument to alter the $y$-axis label.
+
+2. To add a title to a plot we use the `main` argument, viz:
+
+```{r F2, tidy=FALSE, fig.keep="none"}
+     plot(group$Episode, group$Rating, 
+      main="Season", xlab="Episode", ylab="Rating")
+```
+
+We can combine strings/characters using the `paste()` function,
+
+```{r }
+    paste("Season", i)
+```
+
+Rather than have a static title, make the title of each plot display the season number.
+
+```{r fig.keep='none', tidy=FALSE}
+     plot(group$Episode, group$Rating, main = paste("Season", i),
+      xlab = "Episode", ylab = "Rating")
+``` 
+
+3. The y-axis range should really be the same in all graphics. Add a `ylim` argument to fix the range. __Hint__: Work out the range before the `for` loop.
+
+    ```{r  fig.keep='none', tidy=FALSE}
+    range(GoTRating$Rating)
+    plot(group$Episode, group$Rating, 
+      main=paste("Season", i), xlab="Episode", ylab="Rating",
+      ylim=c(0, 10))
+    ``` 
+
+
+4. For each season, plot a linear regression line with Rating as our response variable and Episode as our covariate. This should still all be within the for loop! __Hint__: use `lm()` then `abline()`
+
+```{r fig.keep='none', message=FALSE, tidy=FALSE}
+plot(group$Episode, group$Rating,
+ylab = "Rating", xlab="Episode",
+main=paste("Season", i))
+
+## fit the model
+fit = lm(Rating ~ Episode, data = group)
+abline(fit, col = "red", lty = 2)
+```
+  
+5. At each iteration, use the `message()` function to print the p-value for the Episode covariate and the Adjusted R-squared for each model.
+
+```{r results='hide', message=FALSE}
+sfit = summary(fit)
+p = sfit$coefficients[,4][2]
+message("p = ", p)
+message("The adj R squared is: ", sfit$adj.r.squared)
+```
+
+6. Judging by the adjusted R squared and the covariate p-value, which seasons of Game of Thrones is this model best fitted for?
+
+7. We can add this to the graph as text using the `text()` function. This requires x and y coordinates for the text. For instance,
+
+```{r, echo = TRUE, eval = FALSE}
+text(1, 2, "Hello")
+```
+
+would add the text "hello" the the point x = 1, y = 2. 
+
+```{r message=FALSE, eval = FALSE}
+text(5, 9, paste("p =", p))
+```
+     
+8. Suppose we wanted to save individual graphs in a pdf file. Add the `pdf()`
+function to your code save the resulting graph. To get unique file names, use the paste
+command:
+
+```{r}
+filename = paste0("Season", i, ".pdf")
+```
+
+9. Put your code, i.e. the `for` loop and plotting commands (not the message commands), in a function which takes the data frame as an argument.
+
+
+## Solutions
+
+Solutions are contained within this package:
+```{r eval=FALSE, echo=TRUE}
+vignette("solutions2", package = "jrProgramming")
+```
+
+
+```{r tidy=FALSE}
+## FULL SOLUTION
+viewgraphs = function(GoTRating,  save=FALSE) {
+  for(i in unique(GoTRating$Season)) {
+    if(save) {
+      filename = paste("Season", i, ".pdf", sep="")
+      pdf(filename)
+    }
+    
+    group = filter(GoTRating, Season == i)
+    plot(group$Episode, group$Rating,
+         ylab="Rating", xlab="Episode",
+         main=paste("Season", i), 
+         ylim = c(0,10))
+    
+    ## fit the model
+    fit = lm(Rating ~ Episode, data = group)
+    abline(fit, col = "red", lty = 2)
+    
+    ## add text to the graph
+    sfit = summary(fit)
+    p = sfit$coefficients[,4][2]
+    text(5, 9, paste("p =", p))
+    
+    if(save){
+      dev.off()
+    } else {  
+      readline("Hit return for next plot\n")
+    }
+  }
+}
+```

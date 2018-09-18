@@ -14,3 +14,10 @@
 #' @examples
 #' data(experiment)
 NULL
+
+#' @name GoTRating
+#' @title Game of Thrones ratings
+#' @description Game of thrones TV ratings for every episode
+#' @docType data
+#' @format A data frame
+NULL
