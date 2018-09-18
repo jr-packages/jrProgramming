@@ -113,7 +113,7 @@ fit = lm(Rating ~ Episode, data = group)
 abline(fit, col = "red", lty = 2)
 ```
   
-5. At each iteration, use the `message()` function to print the p-value for the Episode covariate and the Adjusted R-squared for each model.
+5. At each iteration, use the `message()` function to print the p-value for the Episode covariate and the Adjusted R-squared for each model. __Hint__: Use the `summary()` function
 
 ```{r results='hide', message=FALSE}
 sfit = summary(fit)
@@ -124,7 +124,7 @@ message("The adj R squared is: ", sfit$adj.r.squared)
 
 6. Judging by the adjusted R squared and the covariate p-value, which seasons of Game of Thrones is this model best fitted for?
 
-7. We can add this to the graph as text using the `text()` function. This requires x and y coordinates for the text. For instance,
+7. Add each covariate p-value to it's repsective graph using the `text()` function. This requires x and y coordinates for the text. For instance,
 
 ```{r, echo = TRUE, eval = FALSE}
 text(1, 2, "Hello")
