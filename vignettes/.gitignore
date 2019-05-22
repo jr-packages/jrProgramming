@@ -3,3 +3,6 @@ figure
 *.tex
 *.log
 *.out
+*.synctex.gz
+monopoly_solutions.pdf
+solutions3.pdf

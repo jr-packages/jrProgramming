@@ -5,7 +5,7 @@ output:
   tufte::tufte_html:
     highlight: tango
 vignette: >
-  %\VignetteIndexEntry{Solutions 1}
+  %\VignetteIndexEntry{Practical Solutions 1}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
