@@ -1,0 +1,115 @@
+## Basic functions
+
+Consider the following simple function
+```{r echo=TRUE}
+v = 5
+Fun1 = function() {
+  v = 0
+  return(v)
+}
+Fun1()
+``` 
+
+1. Why does the final line return 0 and not 5.
+    ```{r }
+    ## Fun1 uses the local variable v
+    ```
+2. Delete line 3 in the above piece of code. Now change `Fun1()` to allow
+`v` to be passed as an argument, i.e. we can write `Fun1(5)`. Call
+this function to make sure it works.
+
+    ```{r}
+    Fun1 = function(v) {
+      return(v)
+    }
+    Fun1(10)
+    ```
+
+
+## Default arguments:
+
+```{r echo=TRUE}
+Fun2 = function(x = 10) {
+  return(x)
+}
+
+Fun3 = function(x) {
+  return(x)
+}
+``` 
+
+1. Why does 
+    ```{r echo=TRUE}
+    Fun2()
+    ```
+    work, but this raises an error
+    ```{r eval=FALSE, echo=TRUE}
+    Fun3()
+    ```
+
+    ```{r}
+    ## Fun3 expects an argument x, but 
+    ## we haven't given one and there is
+    ## no default.
+    ```
+
+2. Change `Fun2` so that it returns `x*x`.
+
+    ```{r }
+    Fun2 = function(x = 10) {
+      return(x*x)
+    }
+    ``` 
+    
+## More `for` loops:
+
+```{r echo=TRUE}
+a = 2
+total = 0
+for(blob in a:5) {
+  total = total + blob
+}
+```
+
+1. In the code above, delete line 1. Now put the above code in a function called `Fun5`,
+where `a` is passed as an argument, i.e. we can call
+`Fun5(1)`
+
+    ```{r }
+    Fun5 = function(a) {
+      total = 0
+      for(blob in a:5){
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(1)
+    ```
+
+2. Alter the code so that the `for` loop goes from `a` to
+`b`, rather than `a` to $5$. Allow `b` to be passed as an
+argument, i.e. we can call `Fun5(1,5)`.
+    ```{r }
+    Fun5 = function(a, b) {
+      total = 0
+      for(blob in a:b){
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(1, 5)
+    ```
+
+3. Change `Fun5` so that it has default arguments of
+`a = 1` and `b = 10`.
+
+    ```{r }
+    Fun5 = function(a=1, b=10) {
+      total = 0
+      for(blob in a:b) {
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(5)
+    ``` 
