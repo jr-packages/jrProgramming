@@ -1,198 +1,115 @@
-```{r, include = FALSE, cache = FALSE}
-library(knitr)
-# opts_knit$set(out.format = "latex")
-knit_theme$set(knit_theme$get("greyscale0"))
+## Basic functions
 
-options(replace.assign=FALSE,width=50)
-
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
-               fig.align='center', 
-                fig.width=4, fig.height=4, 
-               fig.show='hold', cache=FALSE, par=TRUE)
-knit_hooks$set(crop=hook_pdfcrop)
-```
-
-In this question, we are going to use a `for` statement to
-loop} over a large data set and construct some scatter plots. To generate
-the data, run the following piece of R code
-
+Consider the following simple function
 ```{r echo=TRUE}
-data(experiment, package = "jrProgramming")
-head(exper)
+v = 5
+Fun1 = function() {
+  v = 0
+  return(v)
+}
+Fun1()
 ``` 
 
-The data frame `exper` represents an experiment, where we have ten treatments:
-$A, B, \ldots, J$ and measurements at some time points. We want to create a
-scatter plot of measurement against time, for each treatment type.
-
-1. First we create a scatter plot of one treatment:
-
-    ```{r F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"}
-    library(dplyr)
-    treat_a = filter(exper, treat == "A")
-    plot(treat_a$time, treat_a$values)
-    ``` 
-   
- 
-1. To generate a scatter-plot for each treatment, we need to iterate over the different
-treatment types:
-
-    ```{r echo=FALSE}
-    treatment = tail(exper, 1)$treat
-    group = filter(exper, treat == treatment)
-    ```
-    ```{r results='hide', fig.keep='none', tidy=FALSE, echo = TRUE, eval=FALSE}
-    for(treatment in unique(exper$treat)) {
-      group = filter(exper, treat == treatment)
-      plot(group$time, group$values)
-      readline("Hit return for next plot")
-    }
-    ``` 
-    * What does `unique(exper$treat)` give?
-        ```{r}
-        ## It gives all treatments.
-        ```
-    * In the `for` loop, what variable is changing? What are it's possible values?
-        ```{r}
-        ## The treat variable is changing. 
-        ## It goes through the different treatments.
-        ```
-    * What does the `readline()` function do?
-        
-        ```{r}
-        ## It halts execution, waits for user input
-        ```
-
-
-## Questions
-
-1. The default axis labels aren't great. So we can change the $x$-axis label using `xlab`:
-    ```{r fig.keep='none', tidy=FALSE, echo=TRUE}
-     plot(group$time, group$values, xlab="Time")
-    ```
-    ```{r, fig.keep="none"}
-    plot(group$time, group$values,
-         xlab="Time", ylab="Measurement")
-    ```
-    Use the `ylab` argument to alter the $y$-axis label.
-
-1. To add a title to a plot we use the `main` argument, viz:
-
-    ```{r F2, tidy=FALSE, fig.keep="none"}
-     plot(group$time, group$values, 
-      main="Treatment", xlab="Time", ylab="Measurement")
-    ```
-
-    We can combine strings/characters using the `paste()` function,
-
+1. Why does the final line return 0 and not 5.
     ```{r }
-    paste("Treatment", treatment)
+    ## Fun1 uses the local variable v
     ```
-
-    Rather than have a static title, make the title of each plot display the treatment type.
-
-    ```{r fig.keep='none', tidy=FALSE}
-     plot(group$time, group$values, main = paste("Treament", treatment),
-      xlab = "Time", ylab = "Measurement")
-    ``` 
-
-1. The y-axis range should really be the same in all graphics. Add a `ylim` argument 
-to fix the range. __Hint__: Work out the range before the `for` loop.
-
-    ```{r  fig.keep='none', tidy=FALSE}
-    range(exper$values)
-    plot(group$time, group$values, 
-      main=paste("Treament", treatment), xlab="Time", ylab="Measurement",
-      ylim=c(-2, 10))
-    ``` 
-
-
-1. At each iteration, use the `message()` function to print the average measurement level across all time points.
-
-    ```{r results='hide', message=FALSE}
-    ##Within the for loop have the line
-    message(mean(group$values))
-    ```
-
-1. On each graph, highlight any observations with a blue point if they are
-larger than the mean + standard deviations or less than the mean - 
-  standard deviations. Use the `points()` function to highlight a point.
-  __Hint__: You don't need `if` statements here. 
-  Just subset your data frame and pass this new data frame to the points function.
-  For example, to highlight the points (1,2) and (3, 4) we use the command:
-  
-    ```{r echo=-1, fig.keep='none'}
-    plot(0)
-    points(c(1, 3), c(2, 4), col=2)
-    ```
-  
-    ```{r fig.keep='none', message=FALSE, tidy=FALSE}
-     plot(group$time, group$values,
-      ylab = "Measurement", xlab="Time",
-      main=paste("Treatment", treatment))
-
-    ##Calculate the limits
-    values = group$values
-    message(mean(values))
-    upper_lim = mean(values) + sd(values)
-    lower_lim = mean(values) - sd(values)
-    
-    ##Extract the points
-    outliers = filter(group, values > upper_lim | values < lower_lim)
-    ##pch=19 gives a solid dot
-    ##See ?points
-    points(outliers$time, outliers$values, col=4, pch=19)
-    ```
-  
-
-1. Suppose we wanted to save individual graphs in a pdf file. Add the `pdf()`
-function to your code save the resulting graph. To get unique file names, use the paste
-command:
+2. Delete line 3 in the above piece of code. Now change `Fun1()` to allow
+`v` to be passed as an argument, i.e. we can write `Fun1(5)`. Call
+this function to make sure it works.
 
     ```{r}
-    filename = paste0("file", treatment, ".pdf")
+    Fun1 = function(v) {
+      return(v)
+    }
+    Fun1(10)
     ```
-1. Put your code, i.e. the `for` loop and plotting commands, in a function which takes the data frame as an argument.
 
 
-## Solutions
+## Default arguments:
 
-Solutions are contained within this package:
-```{r eval=FALSE, echo=TRUE}
-vignette("solutions2", package = "jrProgramming")
-```
+```{r echo=TRUE}
+Fun2 = function(x = 10) {
+  return(x)
+}
 
+Fun3 = function(x) {
+  return(x)
+}
+``` 
 
-```{r tidy=FALSE}
-## FULL SOLUTION
-viewgraphs = function(exper,  save=FALSE) {
-  for(treat in unique(exper$treat)) {
-    if(save) {
-      filename = paste("file", treat, ".pdf", sep="")
-      pdf(filename)
+1. Why does 
+    ```{r echo=TRUE}
+    Fun2()
+    ```
+    work, but this raises an error
+    ```{r eval=FALSE, echo=TRUE}
+    Fun3()
+    ```
+
+    ```{r}
+    ## Fun3 expects an argument x, but 
+    ## we haven't given one and there is
+    ## no default.
+    ```
+
+2. Change `Fun2` so that it returns `x*x`.
+
+    ```{r }
+    Fun2 = function(x = 10) {
+      return(x*x)
     }
+    ``` 
     
-   plot(group$time, group$values,
-      ylab="Measurement", xlab="Time",
-      main=paste("Treatment", treat))
+## More `for` loops:
 
-    ##Calculate the limits
-    values = group$values
-    message(mean(values))
-    upper_lim = mean(values) + sd(values)
-    lower_lim = mean(values) - sd(values)
-    
-    ##Extract the points
-    outliers = filter(group, values > upper_lim | values < lower_lim)
-    ##pch=19 gives a solid dot
-    ##See ?points
-    points(outliers$time, outliers$values, col=4, pch=19)
-    if(save){
-      dev.off()
-    } else {  
-      readline("Hit return for next plot\n")
-    }
-  }
+```{r echo=TRUE}
+a = 2
+total = 0
+for(blob in a:5) {
+  total = total + blob
 }
 ```
+
+1. In the code above, delete line 1. Now put the above code in a function called `Fun5`,
+where `a` is passed as an argument, i.e. we can call
+`Fun5(1)`
+
+    ```{r }
+    Fun5 = function(a) {
+      total = 0
+      for(blob in a:5){
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(1)
+    ```
+
+2. Alter the code so that the `for` loop goes from `a` to
+`b`, rather than `a` to $5$. Allow `b` to be passed as an
+argument, i.e. we can call `Fun5(1,5)`.
+    ```{r }
+    Fun5 = function(a, b) {
+      total = 0
+      for(blob in a:b){
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(1, 5)
+    ```
+
+3. Change `Fun5` so that it has default arguments of
+`a = 1` and `b = 10`.
+
+    ```{r }
+    Fun5 = function(a=1, b=10) {
+      total = 0
+      for(blob in a:b) {
+        total = total + blob
+      }
+      return(total)
+    }
+    Fun5(5)
+    ``` 

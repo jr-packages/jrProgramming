@@ -1,122 +1,4 @@
-
-```{r setup, include=FALSE, cache=FALSE}
-library(knitr)
-# opts_knit$set(out.format = "latex")
-knit_theme$set(knit_theme$get("greyscale0"))
-
-options(replace.assign=FALSE,width=50)
-
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
-               fig.align='center', 
-               dev='pdf', fig.width=5, fig.height=5, 
-               fig.show='hold', cache=FALSE, par=TRUE)
-knit_hooks$set(crop=hook_pdfcrop)
-
-knit_hooks$set(par=function(before, options, envir){
-  if (before && options$fig.show!='none') {
-    #par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9, mgp=c(2,.7,0),tcl=-.01, las=1)
-  }}, crop=hook_pdfcrop)
-```
-
-The aim of this practical is to understand the syntax of functions and 
-loops. In practical 2, we will use this knowledge in a larger example.
-
-# Basic functions
-
-Consider the following simple function
-```{r echo=TRUE}
-v = 5
-Fun1 = function() {
-  v = 0
-  return(v)
-}
-Fun1()
-``` 
-
-1. Why does the final line return 0 and not 5.
-    ```{r }
-    ## Fun1 uses the local variable v
-    ```
-1. Delete line 3 in the above piece of code. Now change `Fun1()` to allow
-`v` to be passed as an argument, i.e. we can write `Fun1(5)`. Call
-this function to make sure it works.
-
-    ```{r}
-    Fun1 = function(v) {
-      return(v)
-    }
-    Fun1(10)
-    ```
-
-
-## Default arguments:
-
-```{r echo=TRUE}
-Fun2 = function(x = 10) {
-  return(x)
-}
-
-Fun3 = function(x) {
-  return(x)
-}
-``` 
-
-1. Why does 
-    ```{r echo=TRUE}
-    Fun2()
-    ```
-    work, but this raises an error
-    ```{r eval=FALSE, echo=TRUE}
-    Fun3()
-    ```
-
-    ```{r}
-    ## Fun3 expects an argument x, but 
-    ## we haven't given one and there is
-    ## no default.
-    ```
-
-1. Change `Fun2` so that it returns `x*x`.
-
-    ```{r }
-    Fun2 = function(x = 10) {
-      return(x*x)
-    }
-    ``` 
-
-## `if` statements.
-
-```{r echo=TRUE}
-Fun4 = function(x) {
-  if(x==5) {
-    y = 0
-  } else {
-    y = 1
-  }
-  return(y)
-}
-``` 
-
-Change `Fun4` so that it:
-
-  * returns 1 if $x$ is positive;
-  * returns -1 if $x$ is negative;
-  * returns 0 if $x$ is zero.
-
-```{r }
-Fun4 = function(x) {
-  rtn_value = 0
-  if(x > 0) {
-    rtn_value = 1 
-  } else if (x < 0) {
-    rtn_value = -1
-  }
-  return(rtn_value)
-}
-```   
-
-## `for` loops.
+## Question 1
 
 ```{r results="hide", echo=TRUE}
 total = 0
@@ -135,7 +17,7 @@ The `for` loop above calculates
     ```{r }
     total
     ```
-1. Change the above loop to calculate the following summations:
+2. Change the above loop to calculate the following summations:
     \[
 \mbox{(i)} \sum_{i=1}^{20} (i+1)  
 \]
@@ -159,7 +41,7 @@ The `for` loop above calculates
     }
     total
     ```
-1. Rewrite the two loops using the `sum()` function. For example, the for loop in the first
+3. Rewrite the two loops using the `sum()` function. For example, the for loop in the first
 example can be written as `sum(1:5)`
 
     ```{r}
@@ -167,61 +49,7 @@ example can be written as `sum(1:5)`
     sum(-10:15)
     ```
 
-## More `for` loops:
-
-```{r echo=TRUE}
-a = 2
-total = 0
-for(blob in a:5) {
-  total = total + blob
-}
-```
-
-1. In the code above, delete line 1. Now put the above code in a function called `Fun5`,
-where `a` is passed as an argument, i.e. we can call
-`Fun5(1)`
-
-    ```{r }
-    Fun5 = function(a) {
-      total = 0
-      for(blob in a:5){
-        total = total + blob
-      }
-      return(total)
-    }
-    Fun5(1)
-    ```
-
-1. Alter the code so that the `for` loop goes from `a` to
-`b`, rather than `a` to $5$. Allow `b` to be passed as an
-argument, i.e. we can call `Fun5(1,5)`.
-    ```{r }
-    Fun5 = function(a, b) {
-      total = 0
-      for(blob in a:b){
-        total = total + blob
-      }
-      return(total)
-    }
-    Fun5(1, 5)
-    ```
-
-1. Change `Fun5` so that it has default arguments of
-`a = 1` and `b = 10`.
-
-    ```{r }
-    Fun5 = function(a=1, b=10) {
-      total = 0
-      for(blob in a:b) {
-        total = total + blob
-      }
-      return(total)
-    }
-    Fun5(5)
-    ``` 
-
-
-## Multiple t-tests
+## Question 2
 
 In the notes, we observed that it was straight forward to
 loop through a data set set and select the maximum values:
@@ -246,14 +74,5 @@ for(i in seq_along(dd)) {
   means[i] = mean(dd[, i])
   sds[i] = sd(dd[, i])
 }
-```
-
-## Solutions
-
-The solutions can be viewed via
-
-```{r eval=FALSE, echo = TRUE}
-library(jrProgramming)
-vignette("solutions1", package = "jrProgramming")
 ```
 

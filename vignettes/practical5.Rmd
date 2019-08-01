@@ -1,0 +1,29 @@
+---
+title: "Practical 1"
+author: "Jumping Rivers"
+output:
+  tufte::tufte_handout:
+    latex_engine: xelatex
+  tufte::tufte_html: default
+vignette: >
+  %\VignetteIndexEntry{Practical 1}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+## Practical 1
+
+```{r echo=FALSE}
+# pfft old way to do things or what?
+# results = "hide"; echo = FALSE
+
+library(tufte)
+knitr::opts_chunk$set(results = "hide", echo = FALSE)
+# gets rid of all the echo = echo, results = results
+# also makes it easier to be flexible about what shows where
+```
+
+```{r child = 'practical1_contents.Rmd'}
+```
+  
