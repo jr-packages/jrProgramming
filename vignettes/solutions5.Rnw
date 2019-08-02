@@ -1,4 +1,4 @@
-  %\VignetteIndexEntry{practical3}
+%\VignetteIndexEntry{solutions5}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
 <<echo=FALSE>>=
