@@ -1,20 +1,18 @@
 ---
-title: "Solutions 2"
+title: "Practical 2 solutions"
 author: "Jumping Rivers"
 output: 
   tufte::tufte_html:
     highlight: tango
 vignette: >
-  %\VignetteIndexEntry{Solutions 2}
+  %\VignetteIndexEntry{Practical 2 solutions}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
 
-## Practical 1 Solutions
-
 ```{r echo=FALSE}
 library(tufte)
-# knitr::opts_chunk$set(results = "hide", echo = FALSE
+# knitr::opts_chunk$set(results = "hide", echo = FALSE)
 ```
 
 

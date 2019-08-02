@@ -1,130 +1,73 @@
 ## ----echo=FALSE----------------------------------------------------------
-results = "hide"; echo = FALSE
+library(tufte)
+# knitr::opts_chunk$set(results = "hide", echo = FALSE
 
-## ----setup, include=FALSE, cache=FALSE----------
-library(knitr)
-opts_knit$set(out.format = "latex")
-knit_theme$set(knit_theme$get("greyscale0"))
-
-options(replace.assign=FALSE,width=50)
-
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
-               fig.align='center', 
-               dev='pdf', fig.width=5, fig.height=5, 
-               fig.show='hold', cache=FALSE, par=TRUE)
-knit_hooks$set(crop=hook_pdfcrop)
-
-knit_hooks$set(par=function(before, options, envir){
-    if (before && options$fig.show!='none') {
-        par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
-            mgp=c(2,.7,0),tcl=-.01, las=1)
-}}, crop=hook_pdfcrop)
-
-## ----results='hide'-----------------------------
-sample(1:6, 1)
-
-## -----------------------------------------------
-RollTwoDice = function() {
-  total = sample(1:6, 1) + sample(1:6, 1)
-  return(total)
-}
-
-## -----------------------------------------------
-## This creates a vector of 40 values;
-## All values are initially zero
-landings = numeric(40)
-
-## -----------------------------------------------
-landings[2] = landings[2] + 1
-
-## -----------------------------------------------
-SimulateMonopoly = function(no_of_rolls) {    
-  landings = numeric(40)
-  ## Start at GO
-  current = 1
-  for(i in 1:no_of_rolls) {
-    current = current + RollTwoDice()
-    if(current > 40) {
-      current = current - 40
-    }
-    landings[current] = landings[current] + 1
+## ----echo=TRUE-----------------------------------------------------------
+Fun4 = function(x) {
+  if(x==5) {
+    y = 0
+  } else {
+    y = 1
   }
-  return(landings)
+  return(y)
 }
-no_of_rolls = 50000
 
-## ----echo=FALSE---------------------------------
-no_of_rolls = 100
-
-## -----------------------------------------------
-sim = SimulateMonopoly(no_of_rolls)
-
-## ----echo=FALSE---------------------------------
-# no_of_rolls = 2000000
-# sim1 = SimulateMonopoly(no_of_rolls)
-# saveRDS(sim1, file="vignettes/sim1.RData")
-sim = readRDS("sim1.RData")
-
-## ----F1, fig.keep='none', tidy=FALSE------------
-plot(sim/sum(sim), ylim=c(0, 0.06), type='l', 
-        xlab="Square", ylab="Probability")
-
-## ----ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE----
-plot(sim/sum(sim), ylim=c(0, 0.06), type='l', 
-        xlab="Square", ylab="Probability")
-
-## -----------------------------------------------
-CommunityChest = function(current) {
-  goto = current
-  u = runif(1)
-  if(u < 1/16) {
-    goto = 1#Move to Go
-  }else if(u < 2/16) {
-    goto = 11#Go To Jail  :(
+## ------------------------------------------------------------------------
+Fun4 = function(x) {
+  rtn_value = 0
+  if(x > 0) {
+    rtn_value = 1 
+  } else if (x < 0) {
+    rtn_value = -1
   }
-  return(goto)
+  return(rtn_value)
 }
 
-## -----------------------------------------------
-SimulateMonopoly = function(no_of_rolls) {    
-  landings = numeric(40)
-  ## Start at GO
-  current = 1
-  for(i in 1:no_of_rolls) {
-    current = current + RollTwoDice()
-    if(current > 40) {
-      current = current - 40
-    }
-    landings[current] = landings[current] + 1
-    if(current == 3) {
-      cc_move = CommunityChest(current)
-      if(cc_move != current){
-        current = cc_move
-        landings[current] = landings[current] + 1
-      }
-    }
+## ---- echo = TRUE--------------------------------------------------------
+dd = data.frame(x = rnorm(10), y = rnorm(10), z = rnorm(10))
+means = numeric(ncol(dd))
+for(i in seq_along(dd)) {
+  means[i] = mean(dd[, i])
+}
+
+## ---- echo = TRUE, message = TRUE----------------------------------------
+x = 5
+message("The value of x is ", x)
+
+## ------------------------------------------------------------------------
+means = numeric(ncol(dd))
+for(i in seq_along(dd)) {
+  m = mean(dd[,i])
+  if(m > 0.3){
+    message("Warning, the mean is greater than 0.3")
   }
-  return(landings)
+  means[i] = mean(dd[, i])
 }
 
-## -----------------------------------------------
-sim2 = SimulateMonopoly(no_of_rolls)
+## ------------------------------------------------------------------------
+means = numeric(ncol(dd))
+for(i in seq_along(dd)) {
+  m = mean(dd[,i])
+  if(m > 0.3){
+    message("Warning, the mean of column ", i, " is greater than 0.3")
+  }
+  means[i] = mean(dd[, i])
+}
 
-## ----echo=FALSE---------------------------------
-# no_of_rolls = 2000000
-# sim2 = SimulateMonopoly(no_of_rolls)
-# saveRDS(sim2, file="vignettes/sim2.RData")
-sim2 = readRDS("sim2.RData")
+## ------------------------------------------------------------------------
+max_cols_limit = function(data, lim) {
+  means = numeric(ncol(dd))
+  for (i in seq_along(dd)) {
+    m = mean(dd[, i])
+    if (m > lim) {
+      message("Warning, the mean of column ", i, " is greater than ", lim)
+    }
+    means[i] = mean(dd[, i])
+  }
+  return(means)
+}
+max_cols_limit(dd, 0.2)
 
-## ----F2, fig.keep='none', tidy=FALSE------------
-plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l", 
-     xlab="Square", ylab="Probability")
-
-## ----ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE----
-plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l", 
-     xlab="Square", ylab="Probability")
-
-## ----eval=FALSE---------------------------------
-#  vignette("monopoly_solutions", package = "jrProgramming")
+## ----eval=FALSE, echo=TRUE-----------------------------------------------
+#  vignette("solutions3", package = "jrProgramming")
 

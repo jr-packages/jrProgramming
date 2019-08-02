@@ -14,8 +14,7 @@ knit_hooks$set(crop=hook_pdfcrop)
 ```
 
 In this question, we are going to use a `for` statement to
-loop} over a large data set and construct some scatter plots. To generate
-the data, run the following piece of R code
+loop} over a large data set and construct some scatter plots. As a note, we could do a lot of this task using facets in **ggplot2**, but it is good practise for your for loop skills and as you'll see in some places using a for loop is benificial. To generate the data, run the following piece of R code
 
 ```{r echo=TRUE}
 data(experiment, package = "jrProgramming")
@@ -29,9 +28,11 @@ scatter plot of measurement against time, for each treatment type.
 1. First we create a scatter plot of one treatment:
 
     ```{r F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"}
-    library(dplyr)
+    library("dplyr")
+    library("ggplot2")
     treat_a = filter(exper, treat == "A")
-    plot(treat_a$time, treat_a$values)
+    ggplot(treat_a, aes(x = time, y = values)) +
+      geom_point()
     ``` 
    
  
@@ -45,7 +46,9 @@ treatment types:
     ```{r results='hide', fig.keep='none', tidy=FALSE, echo = TRUE, eval=FALSE}
     for(treatment in unique(exper$treat)) {
       group = filter(exper, treat == treatment)
-      plot(group$time, group$values)
+      g = ggplot(group, aes(x = time, y = values)) +
+        geom_point() 
+      print(g)
       readline("Hit return for next plot")
     }
     ``` 
@@ -67,21 +70,28 @@ treatment types:
 
 ## Questions
 
-1. The default axis labels aren't great. So we can change the $x$-axis label using `xlab`:
+1. We can change the $x$-axis label using the `xlab()` function:
     ```{r fig.keep='none', tidy=FALSE, echo=TRUE}
-     plot(group$time, group$values, xlab="Time")
+    ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") 
     ```
     ```{r, fig.keep="none"}
-    plot(group$time, group$values,
-         xlab="Time", ylab="Measurement")
+    ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") + 
+      ylab("Measurement")
     ```
-    Use the `ylab` argument to alter the $y$-axis label.
+    Use the `ylab()` function to alter the $y$-axis label.
 
-1. To add a title to a plot we use the `main` argument, viz:
+1. To add a title to a plot we use the `ggtitle()` function, viz:
 
-    ```{r F2, tidy=FALSE, fig.keep="none"}
-     plot(group$time, group$values, 
-      main="Treatment", xlab="Time", ylab="Measurement")
+    ```{r F2, tidy=FALSE, fig.keep="none", echo = TRUE}
+    ggplot(treat_a, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle("Treatment")
     ```
 
     We can combine strings/characters using the `paste()` function,
@@ -93,22 +103,34 @@ treatment types:
     Rather than have a static title, make the title of each plot display the treatment type.
 
     ```{r fig.keep='none', tidy=FALSE}
-     plot(group$time, group$values, main = paste("Treament", treatment),
-      xlab = "Time", ylab = "Measurement")
+    ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment))
     ``` 
 
-1. The y-axis range should really be the same in all graphics. Add a `ylim` argument 
-to fix the range. __Hint__: Work out the range before the `for` loop.
+1. The y-axis range should really be the same in all graphics. Use the `ylim()` function 
+to fix the range, like below, but using better y-limits. __Hint__: Work out the range before the `for` loop.
+
+    ```{r tidy=FALSE, fig.keep="none", echo = TRUE}
+    ggplot(treat_a, aes(x = time, y = values)) +
+      geom_point() +
+      ylim(-100,100)
+    ```
 
     ```{r  fig.keep='none', tidy=FALSE}
-    range(exper$values)
-    plot(group$time, group$values, 
-      main=paste("Treament", treatment), xlab="Time", ylab="Measurement",
-      ylim=c(-2, 10))
+    r = range(exper$values)
+    ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment)) +
+      ylim(r[1], r[2])
     ``` 
 
 
-1. At each iteration, use the `message()` function to print the average measurement level across all time points.
+1. At each iteration, use the `message()` function to print the average measurement level across all time points. Look at the message help page for examples of it's use!
 
     ```{r results='hide', message=FALSE}
     ##Within the for loop have the line
@@ -117,20 +139,23 @@ to fix the range. __Hint__: Work out the range before the `for` loop.
 
 1. On each graph, highlight any observations with a blue point if they are
 larger than the mean + standard deviations or less than the mean - 
-  standard deviations. Use the `points()` function to highlight a point.
+  standard deviations. You should be using another `geom_point()`.
   __Hint__: You don't need `if` statements here. 
-  Just subset your data frame and pass this new data frame to the points function.
-  For example, to highlight the points (1,2) and (3, 4) we use the command:
+  Just subset your data frame and pass this new data frame to the `geom_point()` function, i.e.
   
-    ```{r echo=-1, fig.keep='none'}
-    plot(0)
-    points(c(1, 3), c(2, 4), col=2)
+    ```{r echo=TRUE, eval = FALSE}
+    geom_point(data = outliers, aes(x = time, y = values))
     ```
   
     ```{r fig.keep='none', message=FALSE, tidy=FALSE}
-     plot(group$time, group$values,
-      ylab = "Measurement", xlab="Time",
-      main=paste("Treatment", treatment))
+    r = range(exper$values)
+    g = ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment)) +
+      ylim(r[1], r[2])
+    print(g)
 
     ##Calculate the limits
     values = group$values
@@ -140,19 +165,20 @@ larger than the mean + standard deviations or less than the mean -
     
     ##Extract the points
     outliers = filter(group, values > upper_lim | values < lower_lim)
-    ##pch=19 gives a solid dot
-    ##See ?points
-    points(outliers$time, outliers$values, col=4, pch=19)
+    g = g +
+      geom_point(data = outliers, aes(x = time, y = values),
+                 colour = "red")
+    print(g)
     ```
   
 
-1. Suppose we wanted to save individual graphs in a pdf file. Add the `pdf()`
-function to your code save the resulting graph. To get unique file names, use the paste
-command:
-
-    ```{r}
-    filename = paste0("file", treatment, ".pdf")
+1. Suppose we wanted to save individual graphs in a pdf file. We can use the ggsave function like so
+    ```{r, echo = TRUE, eval = FALSE}
+    ggsave(filename = "treatment.pdf", 
+             plot = g)
     ```
+To get unique file names, use the `paste0()` function.
+
 1. Put your code, i.e. the `for` loop and plotting commands, in a function which takes the data frame as an argument.
 
 
@@ -160,23 +186,22 @@ command:
 
 Solutions are contained within this package:
 ```{r eval=FALSE, echo=TRUE}
-vignette("solutions2", package = "jrProgramming")
+vignette("solutions4", package = "jrProgramming")
 ```
 
 
 ```{r tidy=FALSE}
 ## FULL SOLUTION
-viewgraphs = function(exper,  save=FALSE) {
-  for(treat in unique(exper$treat)) {
-    if(save) {
-      filename = paste("file", treat, ".pdf", sep="")
-      pdf(filename)
-    }
+viewgraphs = function(data) {
+  for (treatment in unique(data$treat)) {
+    group = filter(data, treat == treatment)
+    g = ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment)) +
+      ylim(r[1], r[2])
     
-   plot(group$time, group$values,
-      ylab="Measurement", xlab="Time",
-      main=paste("Treatment", treat))
-
     ##Calculate the limits
     values = group$values
     message(mean(values))
@@ -185,14 +210,13 @@ viewgraphs = function(exper,  save=FALSE) {
     
     ##Extract the points
     outliers = filter(group, values > upper_lim | values < lower_lim)
-    ##pch=19 gives a solid dot
-    ##See ?points
-    points(outliers$time, outliers$values, col=4, pch=19)
-    if(save){
-      dev.off()
-    } else {  
-      readline("Hit return for next plot\n")
-    }
+    
+    g = g +
+      geom_point(data = outliers, aes(x = time, y = values), colour = "red")
+    print(g)
+    ggsave(filename = paste0("treatment", treatment, ".pdf"),
+           plot = g)
+    readline("Hit return for next plot")
   }
 }
 ```

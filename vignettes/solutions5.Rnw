@@ -155,9 +155,15 @@ sim = readRDS("sim1.RData")
 
 
 \noindent We can then plot the results
-<<F1, fig.keep='none', tidy=FALSE>>=
-plot(sim/sum(sim), ylim=c(0, 0.06), type='l', 
-        xlab="Square", ylab="Probability")
+<<F1, fig.keep='none', tidy=FALSE, message = FALSE>>=
+library("ggplot2")
+sim = sim/sum(sim)
+ggplot() + 
+  geom_line(aes(x = seq_along(sim), 
+                 y = sim)) + 
+  ylim(0, 0.06) +
+  labs(x = "Square", 
+       y = "Probability")
 @ 
 
 
@@ -232,8 +238,13 @@ sim2 = readRDS("sim2.RData")
 \noindent and plot
 
 <<F2, fig.keep='none', tidy=FALSE>>=
-plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l", 
-     xlab="Square", ylab="Probability")
+sim2 = sim2/sum(sim2)
+ggplot() + 
+  geom_line(aes(x = seq_along(sim2), 
+                 y = sim2)) + 
+  ylim(0, 0.06) +
+  labs(x = "Square", 
+       y = "Probability")
 @ 
 
 \begin{marginfigure}

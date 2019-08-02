@@ -1,5 +1,5 @@
 ---
-title: "Solutions 3"
+title: "Practical 3 solutions"
 author: "Jumping Rivers"
 output: 
   tufte::tufte_html:
@@ -9,8 +9,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-
-## Practical 1 Solutions
 
 ```{r echo=FALSE}
 library(tufte)

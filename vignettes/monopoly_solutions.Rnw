@@ -24,7 +24,7 @@ knit_hooks$set(par=function(before, options, envir){
 
 \usepackage{amsmath,graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
-\title{Programming: Practical 3 solutions} 
+\title{Programming: Practical 5 solutions} 
 %\author[Dr Colin Gillespie]{Dr Colin Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
 
@@ -45,7 +45,6 @@ knit_hooks$set(par=function(before, options, envir){
 <<echo=FALSE>>=
 no_of_turns = 50000
 @ 
-
 
 \begin{figure}[h]
   \centering
@@ -175,19 +174,33 @@ SimulateMonopoly = function(no_of_turns) {
   return(landings)
 }
 @ 
+% 
+<<eval=TRUE, echo=FALSE, message = FALSE>>=
+# library("ggplot2")
+# set.seed(1)
+# sim  = SimulateMonopoly(no_of_turns)
+# sim = sim/sum(sim)
+# ggplot() +
+#   geom_line(aes(x = seq_along(sim),
+#                  y = sim)) +
+#   geom_point(aes(x = seq_along(sim),
+#                  y = sim)) +
+#   geom_hline(yintercept = 1/40, colour = "red", linetype = 2) +
+#   ylim(0, 0.06) +
+#   labs(x = "Square",
+#        y = "Probability") +
+#   theme_minimal()
+# ggsave(filename = "monopoly.pdf")
 
-<<eval=FALSE, echo=FALSE>>=
-set.seed(1)
-sim  = SimulateMonopoly(no_of_turns)
-pdf("vignettes/monopoly.pdf")
-setnicepar()
-plot(sim/sum(sim), ylim=c(0,0.08), ylab="Probability", xlab="Square", 
-     type="o", panel.first=grid(), 
-     bg=rgb(170,93,152, maxColorValue=255), 
-     pch=19)
-abline(h=1/40, col=2, lty=2)
-dev.off()
-@ 
+# pdf("vignettes/monopoly.pdf")
+# setnicepar()
+# plot(sim/sum(sim), ylim=c(0,0.08), ylab="Probability", xlab="Square",
+#      type="o", panel.first=grid(),
+#      bg=rgb(170,93,152, maxColorValue=255),
+#      pch=19)
+# abline(h=1/40, col=2, lty=2)
+# dev.off()
+@
 
 
 \clearpage

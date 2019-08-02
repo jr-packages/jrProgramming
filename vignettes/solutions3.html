@@ -13,7 +13,7 @@
 <meta name="author" content="Jumping Rivers" />
 
 
-<title>Solutions 1</title>
+<title>Practical 3 solutions</title>
 
 <style type="text/css">@font-face {
 font-family: "et-book";
@@ -321,78 +321,89 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<h1 class="title toc-ignore">Solutions 1</h1>
+<h1 class="title toc-ignore">Practical 3 solutions</h1>
 <h4 class="author">Jumping Rivers</h4>
 
 
 
-<div id="practical-1-solutions" class="section level2">
-<h2>Practical 1 Solutions</h2>
-</div>
 <div id="question-1" class="section level2">
 <h2>Question 1</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">total =<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) {</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  total =<span class="st"> </span>total <span class="op">+</span><span class="st"> </span>i</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">total</a></code></pre></div>
-<p>The <code>for</code> loop above calculates <span class="math display">\[
-\sum_{i=1}^5 i = 1 + 2 + 3 + 4 + 5
-\]</span></p>
-<ol style="list-style-type: decimal">
-<li><p>What is the final value of <code>total</code> in the above piece of code?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">total</a></code></pre></div>
-<pre><code>## [1] 15</code></pre></li>
-<li><p>Change the above loop to calculate the following summations: <span class="math display">\[
-\mbox{(i)} \sum_{i=1}^{20} (i+1)  
-\]</span></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">total =<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">20</span>) {</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  total =<span class="st"> </span>total <span class="op">+</span><span class="st"> </span>(i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">total</a></code></pre></div>
-<pre><code>## [1] 230</code></pre>
-<p><span class="math display">\[
-\mbox{(ii)} \sum_{j=-10}^{15} j 
-\]</span></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">total =<span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">-10</span><span class="op">:</span><span class="dv">15</span>) {</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">  total =<span class="st"> </span>total <span class="op">+</span><span class="st"> </span>j</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">}</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">total</a></code></pre></div>
-<pre><code>## [1] 65</code></pre></li>
-<li><p>Rewrite the two loops using the <code>sum()</code> function. For example, the for loop in the first example can be written as <code>sum(1:5)</code></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">sum</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">21</span>)</a></code></pre></div>
-<pre><code>## [1] 230</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">sum</span>(<span class="op">-</span><span class="dv">10</span><span class="op">:</span><span class="dv">15</span>)</a></code></pre></div>
-<pre><code>## [1] 65</code></pre></li>
-</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">Fun4 =<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="cf">if</span>(x<span class="op">==</span><span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    y =<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    y =<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="kw">return</span>(y)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">}</a></code></pre></div>
+<p>Change <code>Fun4</code> so that it:</p>
+<ul>
+<li>returns 1 if <span class="math inline">\(x\)</span> is positive;</li>
+<li>returns -1 if <span class="math inline">\(x\)</span> is negative;</li>
+<li><p>returns 0 if <span class="math inline">\(x\)</span> is zero.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Fun4 =<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  rtn_value =<span class="st"> </span><span class="dv">0</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="cf">if</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    rtn_value =<span class="st"> </span><span class="dv">1</span> </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  } <span class="cf">else</span> <span class="cf">if</span> (x <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    rtn_value =<span class="st"> </span><span class="dv">-1</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  }</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="kw">return</span>(rtn_value)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">}</a></code></pre></div></li>
+</ul>
 </div>
 <div id="question-2" class="section level2">
 <h2>Question 2</h2>
-<p>In the notes, we observed that it was straight forward to loop through a data set set and select the maximum values:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">dd =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">max_cols =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">  max_cols[i] =<span class="st"> </span><span class="kw">max</span>(dd[, i])</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">max_cols</a></code></pre></div>
-<pre><code>## [1] 1.543677 1.522233 1.117900</code></pre>
-<ul>
-<li>Alter the above the code to calculate the <code>mean</code> instead of the maximum value</li>
-<li><p>Now, calculate the standard deviation (via <code>sd</code>) as well as the mean. You should only have a single loop!</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">means =<span class="st"> </span>sds =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">  sds[i] =<span class="st"> </span><span class="kw">sd</span>(dd[, i])</a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">}</a></code></pre></div></li>
-</ul>
+<p>In practical 1, we did captured both the mean of each column in a sample data frame.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">dd =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">}</a></code></pre></div>
+<p>The <code>message()</code> command provides us with an easier-to-use, more readable alternative to using <code>print()</code>. For instance,</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">x =<span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">message</span>(<span class="st">&quot;The value of x is &quot;</span>, x)</a></code></pre></div>
+<pre><code>## The value of x is 5</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Change the for loop such that it returns a warning message every time the mean goes above 0.3. The message should say “Warning, mean is greater than 0.3”.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  m =<span class="st"> </span><span class="kw">mean</span>(dd[,i])</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="cf">if</span>(m <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.3</span>){</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="kw">message</span>(<span class="st">&quot;Warning, the mean is greater than 0.3&quot;</span>)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">}</a></code></pre></div></li>
+<li><p>Change the message such that it also tells us the column number of a large mean. For instance, if the mean of columns 2 was &gt; 0.3, it would say “Warning, the mean of column 2 is greater than 0.3”</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">  m =<span class="st"> </span><span class="kw">mean</span>(dd[,i])</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="cf">if</span>(m <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.3</span>){</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="kw">message</span>(<span class="st">&quot;Warning, the mean of column &quot;</span>, i, <span class="st">&quot; is greater than 0.3&quot;</span>)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">}</a></code></pre></div></li>
+<li><p>Convert the code into a function that takes two arguments, the data frame and the limit of the mean.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">max_cols_limit =<span class="st"> </span><span class="cf">function</span>(data, lim) {</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">  means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">    m =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="cf">if</span> (m <span class="op">&gt;</span><span class="st"> </span>lim) {</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">      <span class="kw">message</span>(<span class="st">&quot;Warning, the mean of column &quot;</span>, i, <span class="st">&quot; is greater than &quot;</span>, lim)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">    }</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">    means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">  <span class="kw">return</span>(means)</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">}</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="kw">max_cols_limit</span>(dd, <span class="fl">0.2</span>)</a></code></pre></div>
+<pre><code>## Warning, the mean of column 2 is greater than 0.2</code></pre>
+<pre><code>## [1]  0.03960574  0.20230019 -0.08420384</code></pre></li>
+</ol>
 </div>
 <div id="solutions" class="section level2">
 <h2>Solutions</h2>
 <p>Solutions are contained within this package:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">&quot;solutions1&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;jrProgramming&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">&quot;solutions3&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;jrProgramming&quot;</span>)</a></code></pre></div>
 </div>
 
 

@@ -48,11 +48,11 @@ plot(group$Episode, group$Rating, xlab="Episode")
 plot(group$Episode, group$Rating,
      xlab="Episode", ylab="Rating")
 
-## ----F2, tidy=FALSE, fig.keep="none"------------
+## ----F2, tidy=FALSE, fig.keep="none", echo = TRUE----
      plot(group$Episode, group$Rating, 
-      main="Season", xlab="Episode", ylab="Rating")
+      main="Season", xlab="Episode")
 
-## -----------------------------------------------
+## ---- echo = TRUE-------------------------------
     paste("Season", i)
 
 ## ----fig.keep='none', tidy=FALSE----------------

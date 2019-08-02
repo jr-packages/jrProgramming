@@ -11,9 +11,6 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-
-## Practical 1
-
 ```{r echo=FALSE}
 # pfft old way to do things or what?
 # results = "hide"; echo = FALSE

@@ -1,134 +1,85 @@
 ## ----include = FALSE-----------------------
 knitr::opts_chunk$set(results = "hide", echo = FALSE)
 
-## ---- include = FALSE, cache = FALSE------------
-library(knitr)
-# opts_knit$set(out.format = "latex")
-knit_theme$set(knit_theme$get("greyscale0"))
-
-options(replace.assign=FALSE,width=50)
-
-opts_chunk$set(fig.path='figure/graphics-', 
-               cache.path='cache/graphics-', 
-               fig.align='center', 
-                fig.width=4, fig.height=4, 
-               fig.show='hold', cache=FALSE, par=TRUE)
-knit_hooks$set(crop=hook_pdfcrop)
-
-## ----echo=TRUE----------------------------------
-data(experiment, package = "jrProgramming")
-head(exper)
-
-## ----F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"----
-library(dplyr)
-treat_a = filter(exper, treat == "A")
-plot(treat_a$time, treat_a$values)
-
-## ----echo=FALSE---------------------------------
-treatment = tail(exper, 1)$treat
-group = filter(exper, treat == treatment)
-
-## ----results='hide', fig.keep='none', tidy=FALSE, echo = TRUE, eval=FALSE----
-#  for(treatment in unique(exper$treat)) {
-#    group = filter(exper, treat == treatment)
-#    plot(group$time, group$values)
-#    readline("Hit return for next plot")
-#  }
-
-## -----------------------------------------------
-## It gives all treatments.
-
-## -----------------------------------------------
-## The treat variable is changing. 
-## It goes through the different treatments.
-
-## -----------------------------------------------
-## It halts execution, waits for user input
-
-## ----fig.keep='none', tidy=FALSE, echo=TRUE-----
- plot(group$time, group$values, xlab="Time")
-
-## ---- fig.keep="none"---------------------------
-plot(group$time, group$values,
-     xlab="Time", ylab="Measurement")
-
-## ----F2, tidy=FALSE, fig.keep="none"------------
- plot(group$time, group$values, 
-  main="Treatment", xlab="Time", ylab="Measurement")
-
-## -----------------------------------------------
-paste("Treatment", treatment)
-
-## ----fig.keep='none', tidy=FALSE----------------
- plot(group$time, group$values, main = paste("Treament", treatment),
-  xlab = "Time", ylab = "Measurement")
-
-## ----fig.keep='none', tidy=FALSE----------------
-range(exper$values)
-plot(group$time, group$values, 
-  main=paste("Treament", treatment), xlab="Time", ylab="Measurement",
-  ylim=c(-2, 10))
-
-## ----results='hide', message=FALSE--------------
-##Within the for loop have the line
-message(mean(group$values))
-
-## ----echo=-1, fig.keep='none'-------------------
-plot(0)
-points(c(1, 3), c(2, 4), col=2)
-
-## ----fig.keep='none', message=FALSE, tidy=FALSE----
- plot(group$time, group$values,
-  ylab = "Measurement", xlab="Time",
-  main=paste("Treatment", treatment))
-
-##Calculate the limits
-values = group$values
-message(mean(values))
-upper_lim = mean(values) + sd(values)
-lower_lim = mean(values) - sd(values)
-
-##Extract the points
-outliers = filter(group, values > upper_lim | values < lower_lim)
-##pch=19 gives a solid dot
-##See ?points
-points(outliers$time, outliers$values, col=4, pch=19)
-
-## -----------------------------------------------
-filename = paste0("file", treatment, ".pdf")
-
-## ----eval=FALSE, echo=TRUE----------------------
-#  vignette("solutions2", package = "jrProgramming")
-
-## ----tidy=FALSE---------------------------------
-## FULL SOLUTION
-viewgraphs = function(exper,  save=FALSE) {
-  for(treat in unique(exper$treat)) {
-    if(save) {
-      filename = paste("file", treat, ".pdf", sep="")
-      pdf(filename)
-    }
-    
-   plot(group$time, group$values,
-      ylab="Measurement", xlab="Time",
-      main=paste("Treatment", treat))
-
-    ##Calculate the limits
-    values = group$values
-    message(mean(values))
-    upper_lim = mean(values) + sd(values)
-    lower_lim = mean(values) - sd(values)
-    
-    ##Extract the points
-    outliers = filter(group, values > upper_lim | values < lower_lim)
-    ##pch=19 gives a solid dot
-    ##See ?points
-    points(outliers$time, outliers$values, col=4, pch=19)
-    if(save){
-      dev.off()
-    } else {  
-      readline("Hit return for next plot\n")
-    }
-  }
+## ----echo=TRUE-----------------------------
+v = 5
+Fun1 = function() {
+  v = 0
+  return(v)
 }
+Fun1()
+
+## ------------------------------------------
+## Fun1 uses the local variable v
+
+## ------------------------------------------
+Fun1 = function(v) {
+  return(v)
+}
+Fun1(10)
+
+## ----echo=TRUE-----------------------------
+Fun2 = function(x = 10) {
+  return(x)
+}
+
+Fun3 = function(x) {
+  return(x)
+}
+
+## ----echo=TRUE-----------------------------
+Fun2()
+
+## ----eval=FALSE, echo=TRUE-----------------
+#  Fun3()
+
+## ------------------------------------------
+## Fun3 expects an argument x, but 
+## we haven't given one and there is
+## no default.
+
+## ------------------------------------------
+Fun2 = function(x = 10) {
+  return(x*x)
+}
+
+## ----echo=TRUE-----------------------------
+a = 2
+total = 0
+for(blob in a:5) {
+  total = total + blob
+}
+
+## ------------------------------------------
+Fun5 = function(a) {
+  total = 0
+  for(blob in a:5){
+    total = total + blob
+  }
+  return(total)
+}
+Fun5(1)
+
+## ------------------------------------------
+Fun5 = function(a, b) {
+  total = 0
+  for(blob in a:b){
+    total = total + blob
+  }
+  return(total)
+}
+Fun5(1, 5)
+
+## ------------------------------------------
+Fun5 = function(a=1, b=10) {
+  total = 0
+  for(blob in a:b) {
+    total = total + blob
+  }
+  return(total)
+}
+Fun5(5)
+
+## ----eval=FALSE, echo=TRUE-----------------
+#  vignette("solutions2", package = "jrProgramming")
 

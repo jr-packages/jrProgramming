@@ -1,4 +1,4 @@
-## Basic functions
+## Question 1
 
 Consider the following simple function
 ```{r echo=TRUE}
@@ -26,7 +26,7 @@ this function to make sure it works.
     ```
 
 
-## Default arguments:
+## Question 2
 
 ```{r echo=TRUE}
 Fun2 = function(x = 10) {
@@ -61,7 +61,7 @@ Fun3 = function(x) {
     }
     ``` 
     
-## More `for` loops:
+## Question 3
 
 ```{r echo=TRUE}
 a = 2
@@ -113,3 +113,10 @@ argument, i.e. we can call `Fun5(1,5)`.
     }
     Fun5(5)
     ``` 
+    
+## Solutions
+
+Solutions are contained within this package:
+```{r eval=FALSE, echo=TRUE}
+vignette("solutions2", package = "jrProgramming")
+```
