@@ -7,7 +7,7 @@
 PKG = jrProgramming
 DIR = vignettes
 
-PRACS =  practical3
+PRACS =  practical5
 SOLS = 
 OTHER = monopoly_solutions
 ALL =  $(PRACS)  $(SOLS) $(OTHER)
