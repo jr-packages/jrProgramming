@@ -3,7 +3,7 @@ title: "Practical 4 solutions"
 author: "Jumping Rivers"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Practical 4 Solutions}
+  %\VignetteIndexEntry{solutions4}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

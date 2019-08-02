@@ -355,11 +355,13 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div id="question-2" class="section level2">
 <h2>Question 2</h2>
 <p>In practical 1, we did captured both the mean of each column in a sample data frame.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">dd =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>), <span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">dd =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>),</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">                <span class="dt">y =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>),</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">                <span class="dt">z =</span> <span class="kw">rnorm</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">}</a></code></pre></div>
 <p>The <code>message()</code> command provides us with an easier-to-use, more readable alternative to using <code>print()</code>. For instance,</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">x =<span class="st"> </span><span class="dv">5</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">message</span>(<span class="st">&quot;The value of x is &quot;</span>, x)</a></code></pre></div>
@@ -373,37 +375,39 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="kw">message</span>(<span class="st">&quot;Warning, the mean is greater than 0.3&quot;</span>)</a>
 <a class="sourceLine" id="cb6-6" data-line-number="6">  }</a>
 <a class="sourceLine" id="cb6-7" data-line-number="7">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">}</a></code></pre></div></li>
+<a class="sourceLine" id="cb6-8" data-line-number="8">}</a></code></pre></div>
+<pre><code>## Warning, the mean is greater than 0.3</code></pre></li>
 <li><p>Change the message such that it also tells us the column number of a large mean. For instance, if the mean of columns 2 was &gt; 0.3, it would say “Warning, the mean of column 2 is greater than 0.3”</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  m =<span class="st"> </span><span class="kw">mean</span>(dd[,i])</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  <span class="cf">if</span>(m <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.3</span>){</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">    <span class="kw">message</span>(<span class="st">&quot;Warning, the mean of column &quot;</span>, i, <span class="st">&quot; is greater than 0.3&quot;</span>)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">  }</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">}</a></code></pre></div></li>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">  m =<span class="st"> </span><span class="kw">mean</span>(dd[,i])</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">  <span class="cf">if</span>(m <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.3</span>){</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="kw">message</span>(<span class="st">&quot;Warning, the mean of column &quot;</span>, i, <span class="st">&quot; is greater than 0.3&quot;</span>)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">}</a></code></pre></div>
+<pre><code>## Warning, the mean of column 1 is greater than 0.3</code></pre></li>
 <li><p>Convert the code into a function that takes two arguments, the data frame and the limit of the mean.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">max_cols_limit =<span class="st"> </span><span class="cf">function</span>(data, lim) {</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">  means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">    m =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">    <span class="cf">if</span> (m <span class="op">&gt;</span><span class="st"> </span>lim) {</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">      <span class="kw">message</span>(<span class="st">&quot;Warning, the mean of column &quot;</span>, i, <span class="st">&quot; is greater than &quot;</span>, lim)</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">    }</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">    means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">  }</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">  <span class="kw">return</span>(means)</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">}</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="kw">max_cols_limit</span>(dd, <span class="fl">0.2</span>)</a></code></pre></div>
-<pre><code>## Warning, the mean of column 2 is greater than 0.2</code></pre>
-<pre><code>## [1]  0.03960574  0.20230019 -0.08420384</code></pre></li>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">max_cols_limit =<span class="st"> </span><span class="cf">function</span>(data, lim) {</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">  means =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">    m =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">    <span class="cf">if</span> (m <span class="op">&gt;</span><span class="st"> </span>lim) {</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">      <span class="kw">message</span>(<span class="st">&quot;Warning, the mean of column &quot;</span>, i, <span class="st">&quot; is greater than &quot;</span>, lim)</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">    }</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">    means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">  }</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">  <span class="kw">return</span>(means)</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11">}</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="kw">max_cols_limit</span>(dd, <span class="fl">0.2</span>)</a></code></pre></div>
+<pre><code>## Warning, the mean of column 1 is greater than 0.2</code></pre>
+<pre><code>## [1]  0.80215828 -0.10554544  0.02963616</code></pre></li>
 </ol>
 </div>
 <div id="solutions" class="section level2">
 <h2>Solutions</h2>
 <p>Solutions are contained within this package:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">&quot;solutions3&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;jrProgramming&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">&quot;solutions3&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;jrProgramming&quot;</span>)</a></code></pre></div>
 </div>
 
 

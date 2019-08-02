@@ -20,9 +20,11 @@ data(experiment, package = "jrProgramming")
 head(exper)
 
 ## ----F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"----
-library(dplyr)
+library("dplyr")
+library("ggplot2")
 treat_a = filter(exper, treat == "A")
-plot(treat_a$time, treat_a$values)
+ggplot(treat_a, aes(x = time, y = values)) +
+  geom_point()
 
 ## ----echo=FALSE---------------------------------
 treatment = tail(exper, 1)$treat
@@ -31,7 +33,9 @@ group = filter(exper, treat == treatment)
 ## ----results='hide', fig.keep='none', tidy=FALSE, echo = TRUE, eval=FALSE----
 #  for(treatment in unique(exper$treat)) {
 #    group = filter(exper, treat == treatment)
-#    plot(group$time, group$values)
+#    g = ggplot(group, aes(x = time, y = values)) +
+#      geom_point()
+#    print(g)
 #    readline("Hit return for next plot")
 #  }
 
@@ -46,41 +50,63 @@ group = filter(exper, treat == treatment)
 ## It halts execution, waits for user input
 
 ## ----fig.keep='none', tidy=FALSE, echo=TRUE-----
- plot(group$time, group$values, xlab="Time")
+ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") 
 
 ## ---- fig.keep="none"---------------------------
-plot(group$time, group$values,
-     xlab="Time", ylab="Measurement")
+ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") + 
+  ylab("Measurement")
 
-## ----F2, tidy=FALSE, fig.keep="none"------------
- plot(group$time, group$values, 
-  main="Treatment", xlab="Time", ylab="Measurement")
+## ----F2, tidy=FALSE, fig.keep="none", echo = TRUE----
+ggplot(treat_a, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") +
+  ylab("Measurement") +
+  ggtitle("Treatment")
 
 ## -----------------------------------------------
 paste("Treatment", treatment)
 
 ## ----fig.keep='none', tidy=FALSE----------------
- plot(group$time, group$values, main = paste("Treament", treatment),
-  xlab = "Time", ylab = "Measurement")
+ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") +
+  ylab("Measurement") +
+  ggtitle(paste0("Treament ", treatment))
+
+## ----tidy=FALSE, fig.keep="none", echo = TRUE----
+ggplot(treat_a, aes(x = time, y = values)) +
+  geom_point() +
+  ylim(-100,100)
 
 ## ----fig.keep='none', tidy=FALSE----------------
-range(exper$values)
-plot(group$time, group$values, 
-  main=paste("Treament", treatment), xlab="Time", ylab="Measurement",
-  ylim=c(-2, 10))
+r = range(exper$values)
+ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") +
+  ylab("Measurement") +
+  ggtitle(paste0("Treament ", treatment)) +
+  ylim(r[1], r[2])
 
 ## ----results='hide', message=FALSE--------------
 ##Within the for loop have the line
 message(mean(group$values))
 
-## ----echo=-1, fig.keep='none'-------------------
-plot(0)
-points(c(1, 3), c(2, 4), col=2)
+## ----echo=TRUE, eval = FALSE--------------------
+#  geom_point(data = outliers, aes(x = time, y = values))
 
 ## ----fig.keep='none', message=FALSE, tidy=FALSE----
- plot(group$time, group$values,
-  ylab = "Measurement", xlab="Time",
-  main=paste("Treatment", treatment))
+r = range(exper$values)
+g = ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") +
+  ylab("Measurement") +
+  ggtitle(paste0("Treament ", treatment)) +
+  ylim(r[1], r[2])
+print(g)
 
 ##Calculate the limits
 values = group$values
@@ -90,29 +116,30 @@ lower_lim = mean(values) - sd(values)
 
 ##Extract the points
 outliers = filter(group, values > upper_lim | values < lower_lim)
-##pch=19 gives a solid dot
-##See ?points
-points(outliers$time, outliers$values, col=4, pch=19)
+g = g +
+  geom_point(data = outliers, aes(x = time, y = values),
+             colour = "red")
+print(g)
 
-## -----------------------------------------------
-filename = paste0("file", treatment, ".pdf")
+## ---- echo = TRUE, eval = FALSE-----------------
+#  ggsave(filename = "treatment.pdf",
+#           plot = g)
 
 ## ----eval=FALSE, echo=TRUE----------------------
 #  vignette("solutions4", package = "jrProgramming")
 
 ## ----tidy=FALSE---------------------------------
 ## FULL SOLUTION
-viewgraphs = function(exper,  save=FALSE) {
-  for(treat in unique(exper$treat)) {
-    if(save) {
-      filename = paste("file", treat, ".pdf", sep="")
-      pdf(filename)
-    }
+viewgraphs = function(data) {
+  for (treatment in unique(data$treat)) {
+    group = filter(data, treat == treatment)
+    g = ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment)) +
+      ylim(r[1], r[2])
     
-   plot(group$time, group$values,
-      ylab="Measurement", xlab="Time",
-      main=paste("Treatment", treat))
-
     ##Calculate the limits
     values = group$values
     message(mean(values))
@@ -121,14 +148,13 @@ viewgraphs = function(exper,  save=FALSE) {
     
     ##Extract the points
     outliers = filter(group, values > upper_lim | values < lower_lim)
-    ##pch=19 gives a solid dot
-    ##See ?points
-    points(outliers$time, outliers$values, col=4, pch=19)
-    if(save){
-      dev.off()
-    } else {  
-      readline("Hit return for next plot\n")
-    }
+    
+    g = g +
+      geom_point(data = outliers, aes(x = time, y = values), colour = "red")
+    print(g)
+    ggsave(filename = paste0("treatment", treatment, ".pdf"),
+           plot = g)
+    readline("Hit return for next plot")
   }
 }
 

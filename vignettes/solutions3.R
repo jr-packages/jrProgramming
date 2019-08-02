@@ -24,7 +24,9 @@ Fun4 = function(x) {
 }
 
 ## ---- echo = TRUE--------------------------------------------------------
-dd = data.frame(x = rnorm(10), y = rnorm(10), z = rnorm(10))
+dd = data.frame(x = rnorm(10),
+                y = rnorm(10),
+                z = rnorm(10))
 means = numeric(ncol(dd))
 for(i in seq_along(dd)) {
   means[i] = mean(dd[, i])
