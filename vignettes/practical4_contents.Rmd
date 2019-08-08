@@ -1,0 +1,222 @@
+```{r, include = FALSE, cache = FALSE}
+library(knitr)
+# opts_knit$set(out.format = "latex")
+knit_theme$set(knit_theme$get("greyscale0"))
+
+options(replace.assign=FALSE,width=50)
+
+opts_chunk$set(fig.path='figure/graphics-', 
+               cache.path='cache/graphics-', 
+               fig.align='center', 
+                fig.width=4, fig.height=4, 
+               fig.show='hold', cache=FALSE, par=TRUE)
+knit_hooks$set(crop=hook_pdfcrop)
+```
+
+In this question, we are going to use a `for` statement to
+loop} over a large data set and construct some scatter plots. As a note, we could do a lot of this task using facets in **ggplot2**, but it is good practise for your for loop skills and as you'll see in some places using a for loop is benificial. To generate the data, run the following piece of R code
+
+```{r echo=TRUE}
+data(experiment, package = "jrProgramming")
+head(exper)
+``` 
+
+The data frame `exper` represents an experiment, where we have ten treatments:
+$A, B, \ldots, J$ and measurements at some time points. We want to create a
+scatter plot of measurement against time, for each treatment type.
+
+1. First we create a scatter plot of one treatment:
+
+    ```{r F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"}
+    library("dplyr")
+    library("ggplot2")
+    treat_a = filter(exper, treat == "A")
+    ggplot(treat_a, aes(x = time, y = values)) +
+      geom_point()
+    ``` 
+   
+ 
+1. To generate a scatter-plot for each treatment, we need to iterate over the different
+treatment types:
+
+    ```{r echo=FALSE}
+    treatment = tail(exper, 1)$treat
+    group = filter(exper, treat == treatment)
+    ```
+    ```{r results='hide', fig.keep='none', tidy=FALSE, echo = TRUE, eval=FALSE}
+    for(treatment in unique(exper$treat)) {
+      group = filter(exper, treat == treatment)
+      g = ggplot(group, aes(x = time, y = values)) +
+        geom_point() 
+      print(g)
+      readline("Hit return for next plot")
+    }
+    ``` 
+    * What does `unique(exper$treat)` give?
+        ```{r}
+        ## It gives all treatments.
+        ```
+    * In the `for` loop, what variable is changing? What are it's possible values?
+        ```{r}
+        ## The treat variable is changing. 
+        ## It goes through the different treatments.
+        ```
+    * What does the `readline()` function do?
+        
+        ```{r}
+        ## It halts execution, waits for user input
+        ```
+
+
+## Questions
+
+1. We can change the $x$-axis label using the `xlab()` function:
+    ```{r fig.keep='none', tidy=FALSE, echo=TRUE}
+    ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") 
+    ```
+    ```{r, fig.keep="none"}
+    ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") + 
+      ylab("Measurement")
+    ```
+    Use the `ylab()` function to alter the $y$-axis label.
+
+1. To add a title to a plot we use the `ggtitle()` function, viz:
+
+    ```{r F2, tidy=FALSE, fig.keep="none", echo = TRUE}
+    ggplot(treat_a, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle("Treatment")
+    ```
+
+    We can combine strings/characters using the `paste()` function,
+
+    ```{r }
+    paste("Treatment", treatment)
+    ```
+
+    Rather than have a static title, make the title of each plot display the treatment type.
+
+    ```{r fig.keep='none', tidy=FALSE}
+    ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment))
+    ``` 
+
+1. The y-axis range should really be the same in all graphics. Use the `ylim()` function 
+to fix the range, like below, but using better y-limits. __Hint__: Work out the range before the `for` loop.
+
+    ```{r tidy=FALSE, fig.keep="none", echo = TRUE}
+    ggplot(treat_a, aes(x = time, y = values)) +
+      geom_point() +
+      ylim(-100,100)
+    ```
+
+    ```{r  fig.keep='none', tidy=FALSE}
+    r = range(exper$values)
+    ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment)) +
+      ylim(r[1], r[2])
+    ``` 
+
+
+1. At each iteration, use the `message()` function to print the average measurement level across all time points. Look at the message help page for examples of it's use!
+
+    ```{r results='hide', message=FALSE}
+    ##Within the for loop have the line
+    message(mean(group$values))
+    ```
+
+1. On each graph, highlight any observations with a blue point if they are
+larger than the mean + standard deviations or less than the mean - 
+  standard deviations. You should be using another `geom_point()`.
+  __Hint__: You don't need `if` statements here. 
+  Just subset your data frame and pass this new data frame to the `geom_point()` function, i.e.
+  
+    ```{r echo=TRUE, eval = FALSE}
+    geom_point(data = outliers, aes(x = time, y = values))
+    ```
+  
+    ```{r fig.keep='none', message=FALSE, tidy=FALSE}
+    r = range(exper$values)
+    g = ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment)) +
+      ylim(r[1], r[2])
+    print(g)
+
+    ##Calculate the limits
+    values = group$values
+    message(mean(values))
+    upper_lim = mean(values) + sd(values)
+    lower_lim = mean(values) - sd(values)
+    
+    ##Extract the points
+    outliers = filter(group, values > upper_lim | values < lower_lim)
+    g = g +
+      geom_point(data = outliers, aes(x = time, y = values),
+                 colour = "red")
+    print(g)
+    ```
+  
+
+1. Suppose we wanted to save individual graphs in a pdf file. We can use the ggsave function like so
+    ```{r, echo = TRUE, eval = FALSE}
+    ggsave(filename = "treatment.pdf", 
+             plot = g)
+    ```
+To get unique file names, use the `paste0()` function.
+
+1. Put your code, i.e. the `for` loop and plotting commands, in a function which takes the data frame as an argument.
+
+
+## Solutions
+
+Solutions are contained within this package:
+```{r eval=FALSE, echo=TRUE}
+vignette("solutions4", package = "jrProgramming")
+```
+
+
+```{r tidy=FALSE}
+## FULL SOLUTION
+viewgraphs = function(data) {
+  for (treatment in unique(data$treat)) {
+    group = filter(data, treat == treatment)
+    g = ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment)) +
+      ylim(r[1], r[2])
+    
+    ##Calculate the limits
+    values = group$values
+    message(mean(values))
+    upper_lim = mean(values) + sd(values)
+    lower_lim = mean(values) - sd(values)
+    
+    ##Extract the points
+    outliers = filter(group, values > upper_lim | values < lower_lim)
+    
+    g = g +
+      geom_point(data = outliers, aes(x = time, y = values), colour = "red")
+    print(g)
+    ggsave(filename = paste0("treatment", treatment, ".pdf"),
+           plot = g)
+    readline("Hit return for next plot")
+  }
+}
+```

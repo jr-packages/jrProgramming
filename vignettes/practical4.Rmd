@@ -1,12 +1,12 @@
 ---
-title: "Practical 1"
+title: "Practical 4"
 author: "Jumping Rivers"
 output:
   tufte::tufte_handout:
     latex_engine: xelatex
   tufte::tufte_html: default
 vignette: >
-  %\VignetteIndexEntry{practical1}
+  %\VignetteIndexEntry{practical4}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -21,6 +21,6 @@ knitr::opts_chunk$set(results = "hide", echo = FALSE)
 # also makes it easier to be flexible about what shows where
 ```
 
-```{r child = 'practical1_contents.Rmd'}
+```{r child = 'practical4_contents.Rmd'}
 ```
   

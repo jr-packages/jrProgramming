@@ -1,16 +1,14 @@
 ---
-title: "Solutions 1"
+title: "Practical 3 solutions"
 author: "Jumping Rivers"
 output: 
   tufte::tufte_html:
     highlight: tango
 vignette: >
-  %\VignetteIndexEntry{solutions1}
+  %\VignetteIndexEntry{solutions3}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
-
-## Practical 1 Solutions
 
 ```{r echo=FALSE}
 library(tufte)
@@ -18,5 +16,5 @@ library(tufte)
 ```
 
 
-```{r child = 'practical1_contents.Rmd'}
+```{r child = 'practical3_contents.Rmd'}
 ```

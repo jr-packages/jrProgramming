@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{practical3}
+%\VignetteIndexEntry{practical5}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
 <<echo=FALSE>>=
@@ -34,7 +34,7 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{../graphics/}}
 
-\title{Programming: Practical 3} 
+\title{Programming: Practical 5} 
 \date{}  % if the \date{} command is left out, the current date will be used
 \usepackage{booktabs}
 \usepackage{units}
@@ -156,9 +156,17 @@ sim = readRDS("sim1.RData")
 
 
 \noindent We can then plot the results
-<<F1, fig.keep='none', tidy=FALSE>>=
-plot(sim/sum(sim), ylim=c(0, 0.06), type='l', 
-        xlab="Square", ylab="Probability")
+<<F1, fig.keep='none', tidy=FALSE, message = FALSE>>=
+library("ggplot2")
+library("tibble")
+monopoly = tibble(index = seq_along(sim),
+                  sim = sim/sum(sim))
+ggplot(monopoly) + 
+  geom_line(aes(x = index, 
+                y = sim)) + 
+  ylim(0, 0.06) +
+  labs(x = "Square", 
+       y = "Probability")
 @ 
 
 
@@ -234,8 +242,14 @@ sim2 = readRDS("sim2.RData")
 \noindent and plot
 
 <<F2, fig.keep='none', tidy=FALSE>>=
-plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l", 
-     xlab="Square", ylab="Probability")
+monopoly2 = tibble(index = seq_along(sim2),
+                  sim = sim/sum(sim2))
+ggplot(monopoly2) + 
+  geom_line(aes(x = index, 
+                y = sim)) + 
+  ylim(0, 0.06) +
+  labs(x = "Square", 
+       y = "Probability")
 @ 
 
 \begin{marginfigure}

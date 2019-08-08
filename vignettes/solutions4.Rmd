@@ -1,0 +1,18 @@
+---
+title: "Practical 4 solutions"
+author: "Jumping Rivers"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{solutions4}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+```{r include = FALSE}
+knitr::opts_chunk$set(results = "show", echo = TRUE)
+```
+
+
+```{r child = 'practical4_contents.Rmd'}
+```
