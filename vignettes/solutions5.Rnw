@@ -1,4 +1,10 @@
-## ----setup, include=FALSE, cache=FALSE----------
+%\VignetteIndexEntry{solutions5}
+%!Snw weave = knitr
+%\VignetteEngine{knitr::knitr}
+
+\documentclass[a4paper,justified,openany]{tufte-handout}
+
+<<setup, include=FALSE, cache=FALSE>>=
 library(knitr)
 options(replace.assign=FALSE,width=50)
 
@@ -14,11 +20,41 @@ knit_hooks$set(par=function(before, options, envir){
     par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
         mgp=c(2,.7,0),tcl=-.01, las=1)
   }}, crop=hook_pdfcrop)
+@
 
-## ----echo=FALSE---------------------------------
+\usepackage{amsmath,graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\title{Programming: Practical 5 solutions} 
+%\author[Dr Colin Gillespie]{Dr Colin Gillespie}
+\date{}  % if the \date{} command is left out, the current date will be used
+
+% The following package makes prettier tables.  We're all about the bling!
+\usepackage{booktabs}
+\usepackage{units}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+\newcommand{\cc}{\texttt}
+\setcounter{secnumdepth}{2}
+\usepackage{microtype}
+\begin{document}
+\maketitle% this prints the handout title, author, and date
+
+<<echo=FALSE>>=
 no_of_turns = 50000
+@ 
 
-## -----------------------------------------------
+\begin{figure}[h]
+  \centering
+  \includegraphics[clip=]{monopoly.pdf}
+  \caption{Distribution of resting places in a game of monopoly using
+    \Sexpr{no_of_turns} rolls.}
+\label{fig:1}
+\end{figure}
+
+<<>>=
 ##Dice function
 RollTwoDiceWithDoubles = function(current) {
 
@@ -38,8 +74,9 @@ RollTwoDiceWithDoubles = function(current) {
   return(current)
 }
 
+@ 
 
-## -----------------------------------------------
+<<>>=
 ##Helper function to avoid code replication
 CheckState = function(current) {
   if(current > 40) {
@@ -49,16 +86,18 @@ CheckState = function(current) {
   }
   return(current)
 }
+@ 
 
-## -----------------------------------------------
+<<>>=
 UpdateStateVector = function(current, move, landings) {
   if(move != current){
     landings[current] = landings[current] + 1
   }
   return(landings)
 }
+@ 
 
-## -----------------------------------------------
+<<>>=
 CommunityChest = function(current) {
   u = runif(1)
   goto = current#Default. Do nothing
@@ -100,8 +139,9 @@ Chance = function(current) {
   }
   return(goto)
 }
+@ 
 
-## -----------------------------------------------
+<<>>=
 SimulateMonopoly = function(no_of_turns) {    
   landings = numeric(40)
   ##Start GO
@@ -133,20 +173,46 @@ SimulateMonopoly = function(no_of_turns) {
   }
   return(landings)
 }
+@ 
+% 
+<<eval=TRUE, echo=FALSE, message = FALSE>>=
+# library("ggplot2")
+# set.seed(1)
+# sim  = SimulateMonopoly(no_of_turns)
+# sim = sim/sum(sim)
+# ggplot() +
+#   geom_line(aes(x = seq_along(sim),
+#                  y = sim)) +
+#   geom_point(aes(x = seq_along(sim),
+#                  y = sim)) +
+#   geom_hline(yintercept = 1/40, colour = "red", linetype = 2) +
+#   ylim(0, 0.06) +
+#   labs(x = "Square",
+#        y = "Probability") +
+#   theme_minimal()
+# ggsave(filename = "monopoly.pdf")
 
-## ----eval=FALSE, echo=FALSE---------------------
-#  set.seed(1)
-#  sim  = SimulateMonopoly(no_of_turns)
-#  pdf("vignettes/monopoly.pdf")
-#  setnicepar()
-#  plot(sim/sum(sim), ylim=c(0,0.08), ylab="Probability", xlab="Square",
-#       type="o", panel.first=grid(),
-#       bg=rgb(170,93,152, maxColorValue=255),
-#       pch=19)
-#  abline(h=1/40, col=2, lty=2)
-#  dev.off()
+# pdf("vignettes/monopoly.pdf")
+# setnicepar()
+# plot(sim/sum(sim), ylim=c(0,0.08), ylab="Probability", xlab="Square",
+#      type="o", panel.first=grid(),
+#      bg=rgb(170,93,152, maxColorValue=255),
+#      pch=19)
+# abline(h=1/40, col=2, lty=2)
+# dev.off()
+@
 
-## -----------------------------------------------
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Neater Solutions}
+
+Some of the functions could be simplified.
+
+<<>>=
 ## Rather than if statements, just work to mod 40
 CheckState = function(current) {
   current = current %% 40
@@ -154,8 +220,9 @@ CheckState = function(current) {
     current = 40 
   return(current)
 }
+@ 
 
-## -----------------------------------------------
+<<>>=
 ## Use the sample command to move square
 CommunityChest = function(current) {
   u = runif(1)
@@ -167,8 +234,9 @@ CommunityChest = function(current) {
   }
   return(goto)
 }
+@ 
 
-## -----------------------------------------------
+<<>>=
 ## Use the sample command to move square
 Chance = function(current) {
   u = runif(1)
@@ -186,4 +254,10 @@ Chance = function(current) {
   }
   return(goto)
 }
+@ 
+
+
+
+\end{document}
+
 
