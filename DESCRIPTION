@@ -12,7 +12,7 @@ License: GPL-3
 Depends:
     R (>= 3.2.0)
 Imports:
-    ggplot2movies, dplyr, ggplot2
+    ggplot2movies, dplyr, ggplot2, tibble
 Suggests:
     knitr, tufte, rmarkdown, formatR
 Encoding: UTF-8

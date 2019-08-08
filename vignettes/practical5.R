@@ -66,13 +66,29 @@ sim = SimulateMonopoly(no_of_rolls)
 # saveRDS(sim1, file="vignettes/sim1.RData")
 sim = readRDS("sim1.RData")
 
-## ----F1, fig.keep='none', tidy=FALSE------------
-plot(sim/sum(sim), ylim=c(0, 0.06), type='l', 
-        xlab="Square", ylab="Probability")
+## ----F1, fig.keep='none', tidy=FALSE, message = FALSE----
+library("ggplot2")
+library("tibble")
+monopoly = tibble(index = seq_along(sim),
+                  sim = sim/sum(sim))
+ggplot(monopoly) + 
+  geom_line(aes(x = index, 
+                y = sim)) + 
+  ylim(0, 0.06) +
+  labs(x = "Square", 
+       y = "Probability")
 
 ## ----ref.label='F1', dev='pdf', out.width='\\textwidth', echo=FALSE----
-plot(sim/sum(sim), ylim=c(0, 0.06), type='l', 
-        xlab="Square", ylab="Probability")
+library("ggplot2")
+library("tibble")
+monopoly = tibble(index = seq_along(sim),
+                  sim = sim/sum(sim))
+ggplot(monopoly) + 
+  geom_line(aes(x = index, 
+                y = sim)) + 
+  ylim(0, 0.06) +
+  labs(x = "Square", 
+       y = "Probability")
 
 ## -----------------------------------------------
 CommunityChest = function(current) {
@@ -118,12 +134,24 @@ sim2 = SimulateMonopoly(no_of_rolls)
 sim2 = readRDS("sim2.RData")
 
 ## ----F2, fig.keep='none', tidy=FALSE------------
-plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l", 
-     xlab="Square", ylab="Probability")
+monopoly2 = tibble(index = seq_along(sim2),
+                  sim = sim/sum(sim2))
+ggplot(monopoly2) + 
+  geom_line(aes(x = index, 
+                y = sim)) + 
+  ylim(0, 0.06) +
+  labs(x = "Square", 
+       y = "Probability")
 
 ## ----ref.label='F2', dev='pdf', out.width='\\textwidth', echo=FALSE----
-plot(sim2/sum(sim2), ylim=c(0, 0.06), type="l", 
-     xlab="Square", ylab="Probability")
+monopoly2 = tibble(index = seq_along(sim2),
+                  sim = sim/sum(sim2))
+ggplot(monopoly2) + 
+  geom_line(aes(x = index, 
+                y = sim)) + 
+  ylim(0, 0.06) +
+  labs(x = "Square", 
+       y = "Probability")
 
 ## ----eval=FALSE---------------------------------
 #  vignette("monopoly_solutions", package = "jrProgramming")
