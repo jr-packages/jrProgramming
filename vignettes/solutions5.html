@@ -7,13 +7,14 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="author" content="Jumping Rivers" />
 
 
-<title>Practical 4 solutions</title>
+<title>Practical 5 solutions</title>
 
 
 
@@ -95,7 +96,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -300,7 +301,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 
-<h1 class="title toc-ignore">Practical 4 solutions</h1>
+<h1 class="title toc-ignore">Practical 5 solutions</h1>
 <h4 class="author">Jumping Rivers</h4>
 
 
@@ -415,7 +416,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="solutions" class="section level2">
 <h2>Solutions</h2>
 <p>Solutions are contained within this package:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">&quot;solutions4&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;jrProgramming&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">&quot;solutions5&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;jrProgramming&quot;</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co">## FULL SOLUTION</span></a>
 <a class="sourceLine" id="cb21-2" data-line-number="2">viewgraphs =<span class="st"> </span><span class="cf">function</span>(data) {</a>
 <a class="sourceLine" id="cb21-3" data-line-number="3">  <span class="cf">for</span> (treatment <span class="cf">in</span> <span class="kw">unique</span>(data<span class="op">$</span>treat)) {</a>
@@ -446,6 +447,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb21-28" data-line-number="28">}</a></code></pre></div>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

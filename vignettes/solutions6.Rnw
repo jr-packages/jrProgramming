@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{solutions5}
+%\VignetteIndexEntry{solutions6}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
 
@@ -24,7 +24,7 @@ knit_hooks$set(par=function(before, options, envir){
 
 \usepackage{amsmath,graphicx}
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
-\title{Programming: Practical 5 solutions} 
+\title{Programming: Practical 6 solutions} 
 %\author[Dr Colin Gillespie]{Dr Colin Gillespie}
 \date{}  % if the \date{} command is left out, the current date will be used
 

@@ -1,4 +1,4 @@
-%\VignetteIndexEntry{practical5}
+%\VignetteIndexEntry{practical6}
 %!Snw weave = knitr
 %\VignetteEngine{knitr::knitr}
 <<echo=FALSE>>=
@@ -34,7 +34,7 @@ knit_hooks$set(par=function(before, options, envir){
 \setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
 \graphicspath{{../graphics/}}
 
-\title{Programming: Practical 5} 
+\title{Programming: Practical 6} 
 \date{}  % if the \date{} command is left out, the current date will be used
 \usepackage{booktabs}
 \usepackage{units}
@@ -354,7 +354,7 @@ A Chance card is most likely to move players. There are three chance areas on th
 
 Solutions are contained within this package:
 <<eval=FALSE>>=
-vignette("monopoly_solutions", package = "jrProgramming")
+vignette("solutions6", package = "jrProgramming")
 @
 
 

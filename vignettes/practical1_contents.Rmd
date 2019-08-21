@@ -64,8 +64,8 @@ for(i in seq_along(dd)) {
 max_cols
 ```
 
- * Alter the above the code to calculate the `mean` instead of the maximum value
- * Now, calculate the standard deviation (via `sd`) as well as the mean. 
+ * Alter the above the code to calculate the `mean()` instead of the maximum value
+ * Now, calculate the standard deviation (via `sd()`) as well as the mean. 
  You should only have a single loop!
     ```{r}
     means = sds = numeric(ncol(dd))

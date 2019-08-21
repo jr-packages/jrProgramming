@@ -1,203 +1,160 @@
-## ----setup, include=FALSE, cache=FALSE----------
+## ----include = FALSE-----------------------------------------------------
+knitr::opts_chunk$set(results = "show", echo = TRUE)
+
+## ---- include = FALSE, cache = FALSE------------
 library(knitr)
+# opts_knit$set(out.format = "latex")
+knit_theme$set(knit_theme$get("greyscale0"))
+
 options(replace.assign=FALSE,width=50)
 
 opts_chunk$set(fig.path='figure/graphics-', 
                cache.path='cache/graphics-', 
                fig.align='center', 
-               dev='pdf', fig.width=5, fig.height=5, 
+                fig.width=4, fig.height=4, 
                fig.show='hold', cache=FALSE, par=TRUE)
 knit_hooks$set(crop=hook_pdfcrop)
 
-knit_hooks$set(par=function(before, options, envir){
-  if (before && options$fig.show!='none') {
-    par(mar=c(3,3,2,1),cex.lab=.95,cex.axis=.9,
-        mgp=c(2,.7,0),tcl=-.01, las=1)
-  }}, crop=hook_pdfcrop)
+## ----echo=TRUE----------------------------------
+data(experiment, package = "jrProgramming")
+head(exper)
+
+## ----F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"----
+library("dplyr")
+library("ggplot2")
+treat_a = filter(exper, treat == "A")
+ggplot(treat_a, aes(x = time, y = values)) +
+  geom_point()
 
 ## ----echo=FALSE---------------------------------
-no_of_turns = 50000
+treatment = tail(exper, 1)$treat
+group = filter(exper, treat == treatment)
+
+## ----results='hide', fig.keep='none', tidy=FALSE, echo = TRUE, eval=FALSE----
+#  for(treatment in unique(exper$treat)) {
+#    group = filter(exper, treat == treatment)
+#    g = ggplot(group, aes(x = time, y = values)) +
+#      geom_point()
+#    print(g)
+#    readline("Hit return for next plot")
+#  }
 
 ## -----------------------------------------------
-##Dice function
-RollTwoDiceWithDoubles = function(current) {
-
-  df = data.frame(d1 = sample(1:6, 3, replace=TRUE), 
-    d2 = sample(1:6, 3, replace=TRUE))
-  
-  df$Total = apply(df, 1, sum)
-  df$IsDouble = df$d1 == df$d2
-
-  if(df$IsDouble[1] & df$IsDouble[2] & df$IsDouble[3]) {
-    current = 11#Go To Jail
-  } else if(df$IsDouble[1] & df$IsDouble[2]) {
-    current = current + sum(df$Total[1:2])
-  } else {
-    current = current + df$Total[1]
-  }
-  return(current)
-}
-
+## It gives all treatments.
 
 ## -----------------------------------------------
-##Helper function to avoid code replication
-CheckState = function(current) {
-  if(current > 40) {
-    current = current - 40
-  } else if(current < 1) {
-    current = current + 40 
-  }
-  return(current)
-}
+## The treat variable is changing. 
+## It goes through the different treatments.
 
 ## -----------------------------------------------
-UpdateStateVector = function(current, move, landings) {
-  if(move != current){
-    landings[current] = landings[current] + 1
-  }
-  return(landings)
-}
+## It halts execution, waits for user input
+
+## ----fig.keep='none', tidy=FALSE, echo=TRUE-----
+ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") 
+
+## ---- fig.keep="none"---------------------------
+ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") + 
+  ylab("Measurement")
+
+## ----F2, tidy=FALSE, fig.keep="none", echo = TRUE----
+ggplot(treat_a, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") +
+  ylab("Measurement") +
+  ggtitle("Treatment")
 
 ## -----------------------------------------------
-CommunityChest = function(current) {
-  u = runif(1)
-  goto = current#Default. Do nothing
-  if(u < 1/16) {
-    goto = 1#Go
-  }else if(u < 2/16) {
-    goto = 11#Jail
-  }else if(u < 3/16) {
-    goto = 2#Old Kent Rd
-  }else if(u < 4/16) {
-    goto = Chance(current)
-  }
-  return(goto)
-}
+paste("Treatment", treatment)
 
-Chance = function(current) {
-  u = runif(1)
-  goto = current#Default. Do nothing
-  if(u < 1/16){
-    goto = 1#Go
-  }else if(u < 2/16){
-    goto = 25#Tra Square
-  }else if(u < 3/16){
-    goto = 12#Pall Mall
-  }else if(u < 4/16){
-    goto = 11#Jail
-  }else if(u < 5/16){
-    goto = 16#Mary' Stat
-  }else if(u < 6/16){
-    goto = 40#Mayfair
-  }else if(u < 7/16) {
-    goto = CheckState(current - 3)#Must check, since goto maybe negative!
-  }else if(u < 8/16){
-    if(current > 29  | current < 13){
-      goto = 13
-    }else {
-      goto = 29
-    }
-  }
-  return(goto)
-}
+## ----fig.keep='none', tidy=FALSE----------------
+ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") +
+  ylab("Measurement") +
+  ggtitle(paste0("Treament ", treatment))
 
-## -----------------------------------------------
-SimulateMonopoly = function(no_of_turns) {    
-  landings = numeric(40)
-  ##Start GO
-  current = 1
-  for(i in 1:no_of_turns) {
-    current = RollTwoDiceWithDoubles(current)
-    current = CheckState(current)
-    landings = UpdateStateVector(current, -1, landings)
+## ----tidy=FALSE, fig.keep="none", echo = TRUE----
+ggplot(treat_a, aes(x = time, y = values)) +
+  geom_point() +
+  ylim(-100,100)
 
-    if(current == 8 | current == 23 | current == 37) {#Chance
-      move = Chance(current)
-      landings = UpdateStateVector(move, current, landings)
-      current = move
-    }
+## ----fig.keep='none', tidy=FALSE----------------
+r = range(exper$values)
+ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") +
+  ylab("Measurement") +
+  ggtitle(paste0("Treament ", treatment)) +
+  ylim(r[1], r[2])
 
-    if(current == 3 | current == 18 | current == 34) {#Community Chest
-      move = CommunityChest(current)
-      landings = UpdateStateVector(move, current, landings)
-      current = move
-    } 
+## ----results='hide', message=FALSE--------------
+##Within the for loop have the line
+message(mean(group$values))
+
+## ----echo=TRUE, eval = FALSE--------------------
+#  geom_point(data = outliers, aes(x = time, y = values))
+
+## ----fig.keep='none', message=FALSE, tidy=FALSE----
+r = range(exper$values)
+g = ggplot(group, aes(x = time, y = values)) +
+  geom_point() +
+  xlab("Time") +
+  ylab("Measurement") +
+  ggtitle(paste0("Treament ", treatment)) +
+  ylim(r[1], r[2])
+print(g)
+
+##Calculate the limits
+values = group$values
+message(mean(values))
+upper_lim = mean(values) + sd(values)
+lower_lim = mean(values) - sd(values)
+
+##Extract the points
+outliers = filter(group, values > upper_lim | values < lower_lim)
+g = g +
+  geom_point(data = outliers, aes(x = time, y = values),
+             colour = "red")
+print(g)
+
+## ---- echo = TRUE, eval = FALSE-----------------
+#  ggsave(filename = "treatment.pdf",
+#           plot = g)
+
+## ----eval=FALSE, echo=TRUE----------------------
+#  vignette("solutions5", package = "jrProgramming")
+
+## ----tidy=FALSE---------------------------------
+## FULL SOLUTION
+viewgraphs = function(data) {
+  for (treatment in unique(data$treat)) {
+    group = filter(data, treat == treatment)
+    g = ggplot(group, aes(x = time, y = values)) +
+      geom_point() +
+      xlab("Time") +
+      ylab("Measurement") +
+      ggtitle(paste0("Treament ", treatment)) +
+      ylim(r[1], r[2])
     
-    ##Go To Jail. Chance could also send you here by 
-    ##going back three places
-    if(current == 31) {
-      current = 11
-      landings = UpdateStateVector(current, -1, landings)
-    }
-
+    ##Calculate the limits
+    values = group$values
+    message(mean(values))
+    upper_lim = mean(values) + sd(values)
+    lower_lim = mean(values) - sd(values)
+    
+    ##Extract the points
+    outliers = filter(group, values > upper_lim | values < lower_lim)
+    
+    g = g +
+      geom_point(data = outliers, aes(x = time, y = values), colour = "red")
+    print(g)
+    ggsave(filename = paste0("treatment", treatment, ".pdf"),
+           plot = g)
+    readline("Hit return for next plot")
   }
-  return(landings)
-}
-
-## ----eval=TRUE, echo=FALSE, message = FALSE-----
-# library("ggplot2")
-# set.seed(1)
-# sim  = SimulateMonopoly(no_of_turns)
-# sim = sim/sum(sim)
-# ggplot() +
-#   geom_line(aes(x = seq_along(sim),
-#                  y = sim)) +
-#   geom_point(aes(x = seq_along(sim),
-#                  y = sim)) +
-#   geom_hline(yintercept = 1/40, colour = "red", linetype = 2) +
-#   ylim(0, 0.06) +
-#   labs(x = "Square",
-#        y = "Probability") +
-#   theme_minimal()
-# ggsave(filename = "monopoly.pdf")
-
-# pdf("vignettes/monopoly.pdf")
-# setnicepar()
-# plot(sim/sum(sim), ylim=c(0,0.08), ylab="Probability", xlab="Square",
-#      type="o", panel.first=grid(),
-#      bg=rgb(170,93,152, maxColorValue=255),
-#      pch=19)
-# abline(h=1/40, col=2, lty=2)
-# dev.off()
-
-## -----------------------------------------------
-## Rather than if statements, just work to mod 40
-CheckState = function(current) {
-  current = current %% 40
-  if(current == 0)
-    current = 40 
-  return(current)
-}
-
-## -----------------------------------------------
-## Use the sample command to move square
-CommunityChest = function(current) {
-  u = runif(1)
-  goto = current#Default. Do nothing
-  if(u < 3/16) {
-    goto = sample(c(1, 11, 2), 1)
-  } else if(u < 4/16) {
-    goto = Chance(current)
-  }
-  return(goto)
-}
-
-## -----------------------------------------------
-## Use the sample command to move square
-Chance = function(current) {
-  u = runif(1)
-  goto = current#Default. Do nothing
-  if(u < 6/16){
-    goto = sample(c(1, 25, 12, 11, 16, 50), 1)
-  }else if(u < 7/16) {
-    goto = CheckState(current - 3)#Must check, since goto maybe negative!
-  }else if(u < 8/16){
-    if(current > 29  | current < 13){
-      goto = 13
-    }else {
-      goto = 29
-    }
-  }
-  return(goto)
 }
 

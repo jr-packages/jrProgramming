@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -299,7 +300,7 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
       if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -379,10 +380,10 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb12-5" data-line-number="5">  max_cols[i] =<span class="st"> </span><span class="kw">max</span>(dd[, i])</a>
 <a class="sourceLine" id="cb12-6" data-line-number="6">}</a>
 <a class="sourceLine" id="cb12-7" data-line-number="7">max_cols</a></code></pre></div>
-<pre><code>## [1] 1.0589499 2.7377696 0.8686784</code></pre>
+<pre><code>## [1] 1.587711 2.062942 2.039390</code></pre>
 <ul>
-<li>Alter the above the code to calculate the <code>mean</code> instead of the maximum value</li>
-<li><p>Now, calculate the standard deviation (via <code>sd</code>) as well as the mean. You should only have a single loop!</p>
+<li>Alter the above the code to calculate the <code>mean()</code> instead of the maximum value</li>
+<li><p>Now, calculate the standard deviation (via <code>sd()</code>) as well as the mean. You should only have a single loop!</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">means =<span class="st"> </span>sds =<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">ncol</span>(dd))</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_along</span>(dd)) {</a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">  means[i] =<span class="st"> </span><span class="kw">mean</span>(dd[, i])</a>
@@ -396,6 +397,9 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">&quot;solutions1&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;jrProgramming&quot;</span>)</a></code></pre></div>
 </div>
 
+
+
+<!-- code folding -->
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
