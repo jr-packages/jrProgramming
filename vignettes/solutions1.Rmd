@@ -2,8 +2,9 @@
 title: "Solutions 1"
 author: "Jumping Rivers"
 output: 
-  tufte::tufte_html:
-    highlight: tango
+  tufte::tufte_handout:
+    latex_engine: xelatex
+  tufte::tufte_html: default
 vignette: >
   %\VignetteIndexEntry{solutions1}
   %\VignetteEngine{knitr::rmarkdown}

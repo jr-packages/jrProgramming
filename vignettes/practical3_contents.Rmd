@@ -31,7 +31,7 @@ Change `Fun4` so that it:
 
 ## Question 2
 
-In practical 1, we did captured both the mean of each column in a sample data frame.
+In practical 1, we calculated the mean of each column in a sample data frame using code similar to that below.
 ```{r, echo = TRUE}
 dd = data.frame(x = rnorm(10),
                 y = rnorm(10),
