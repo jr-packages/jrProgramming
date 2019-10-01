@@ -78,7 +78,7 @@ message("The value of x is ", x)
 3. Convert the code into a function that takes two arguments, the data frame and the limit of the mean. 
 
     ```{r}
-    max_cols_limit = function(data, lim) {
+    max_cols_limit = function(dd, lim) {
       means = numeric(ncol(dd))
       for (i in seq_along(dd)) {
         m = mean(dd[, i])
