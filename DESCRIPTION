@@ -1,7 +1,9 @@
 Package: jrProgramming
 Type: Package
 Title: Jumping Rivers: Introduction to Programming
-Version: 0.1.5
+
+Version: 0.1.8
+
 Authors@R: person("Colin", "Gillespie",
      email="colin@jumpingrivers.com", 
      role = c("aut", "cre"))
