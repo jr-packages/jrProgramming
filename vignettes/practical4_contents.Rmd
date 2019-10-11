@@ -45,7 +45,7 @@ and this will create an empty R script called `load.R`. Hint: You can do this wi
 # Question 2 - Harder
 
 This question is much harder than the first, you have been warned! It would be ideal if we could insert the source commands into the R scripts as well. You can append lines of text to a file using the `writeLines()`, `file()` and `close()` functions. For instance, 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo = TRUE}
 file.create("clean.R")
 fileConn = file("clean.R")
 writeLines('source("load.R")', fileConn)
