@@ -29,7 +29,7 @@ script:
   - Rscript -e "inteRgrate::check_pkg()"
   - Rscript -e "inteRgrate::check_r_filenames()"
   - Rscript -e "inteRgrate::check_tidy_description()"
-  - Rscript -e "inteRgrate::check_lintr(vignettes = FALSE)"
+  - Rscript -e "inteRgrate::check_lintr()"
   - Rscript -e "inteRgrate::check_namespace()"
 
 after_success:
