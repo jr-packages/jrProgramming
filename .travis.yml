@@ -19,7 +19,7 @@ r_github_packages:
   - jumpingrivers/inteRgrate
 
 before_install:
-  - tlmgr install fancyvrb units
+  - sudo apt-get install -y ghostscript
 
 before_script:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/test_deploy.sh
