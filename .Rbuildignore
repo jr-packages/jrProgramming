@@ -1,7 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-Makefile
-.travis.yml
-vignettes/figure
-^README.Rmd$
-Dockerfile
+^Makefile$
+^\.travis\.yml$
+^vignettes/figure
+^README\.Rmd$
+^Dockerfile$
+^\.lintr$

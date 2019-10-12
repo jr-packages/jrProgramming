@@ -4,7 +4,7 @@ This question contains some maths equations, in particular two summations. If yo
 
 ```{r results="hide", echo=TRUE}
 total = 0
-for(i in 1:5) {
+for (i in 1:5) {
   total = total + i
 }
 total
@@ -25,7 +25,7 @@ The `for` loop above calculates
 \]
     ```{r}
     total = 0
-    for(i in 1:20) {
+    for (i in 1:20) {
       total = total + (i + 1)
     }
     total
@@ -35,7 +35,7 @@ The `for` loop above calculates
 \]
     ```{r}
     total = 0
-    for(j in -10:15) {
+    for (j in -10:15) {
       total = total + j
     }
     total
@@ -58,7 +58,7 @@ loop through a data set set and select the maximum values:
 dd = data.frame(x = rnorm(10), y = rnorm(10), z = rnorm(10))
 
 max_cols = numeric(ncol(dd))
-for(i in seq_along(dd)) {
+for (i in seq_along(dd)) {
   max_cols[i] = max(dd[, i])
 }
 max_cols
@@ -69,7 +69,7 @@ max_cols
  You should only have a single loop!
     ```{r}
     means = sds = numeric(ncol(dd))
-    for(i in seq_along(dd)) {
+    for (i in seq_along(dd)) {
       means[i] = mean(dd[, i])
       sds[i] = sd(dd[, i])
     }

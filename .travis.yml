@@ -1,6 +1,10 @@
 language: r
 cache: packages
 
+env:
+  global:
+    - ALLOWED_NOTES=1
+
 notifications:
   email:
     recipients:
@@ -11,13 +15,22 @@ notifications:
 r_packages:
   - drat
 
+r_github_packages:
+  - jumpingrivers/inteRgrate
+
 before_install:
   - tlmgr install fancyvrb units
 
 before_script:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/test_deploy.sh
-  - bash test_deploy.sh
-  - rm test_deploy.sh
+  - bash test_deploy.sh && rm test_deploy.sh
+
+script:
+  - Rscript -e "inteRgrate::check_pkg()"
+  - Rscript -e "inteRgrate::check_r_filenames()"
+  - Rscript -e "inteRgrate::check_tidy_description()"
+  - Rscript -e "inteRgrate::check_lintr(vignettes = FALSE)"
+  - Rscript -e "inteRgrate::check_namespace()"
 
 after_success:
   - wget https://raw.githubusercontent.com/jr-packages/drat/master/deploy.sh

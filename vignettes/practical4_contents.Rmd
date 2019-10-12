@@ -4,7 +4,7 @@ In this practical we're going to have a go at building a function to automatical
 
 a) We can use the `dir.create()` function to create a directory in R. Here's a starter function that will create a project directory depending on the users input
     ```{r, echo = TRUE}
-    create_workflow = function(project_name){
+    create_workflow = function(project_name) {
       dir.create(project_name)
     }
     ```
@@ -14,7 +14,7 @@ b) Now we need to create the directories `input`, `R`, `graphics` and `output` w
     file.path("project", "directory")
     ```
     ```{r}
-    create_workflow = function(project_name){
+    create_workflow = function(project_name) {
       dir.create(project_name)
         for (directory in c("input", "R", "graphics", "output")) {
         dir.create(path = file.path(project_name, directory))
@@ -33,7 +33,7 @@ and this will create an empty R script called `load.R`. Hint: You can do this wi
       for (directory in c("input", "R", "graphics", "output")) {
         dir.create(path = file.path(project_name, directory))
       }
-      for(rfile in c("load", "clean", "func", "do", "graphics")){
+      for (rfile in c("load", "clean", "func", "do", "graphics")) {
         fname = paste0(rfile, ".R")
         fpath = file.path(project_name, "R", fname)
         file.create(fpath)
@@ -47,9 +47,9 @@ and this will create an empty R script called `load.R`. Hint: You can do this wi
 This question is much harder than the first, you have been warned! It would be ideal if we could insert the source commands into the R scripts as well. You can append lines of text to a file using the `writeLines()`, `file()` and `close()` functions. For instance, 
 ```{r, eval = FALSE, echo = TRUE}
 file.create("clean.R")
-fileConn = file("clean.R")
-writeLines("source('load.R')", fileConn)
-close(fileConn)
+file_conn = file("clean.R")
+writeLines("source('load.R')", file_conn)
+close(file_conn)
 ```
 \noindent The contents of each file should look like so:
 
@@ -59,28 +59,27 @@ close(fileConn)
 - `do.R` - One line of code: `source("project_name/R/func.R")`
 - `graphics.R` - One line of code: `source("project_name/R/do.R")`
 
-The idea being that when you call `source("do.R")` in `graphics.R`, it will run all 4 previous files.
+The idea being that when you call `source("do.R")` in `graphics.R`, it will run all four previous files.
 ```{r}
 create_workflow = function(project_name) {
   dir.create(path = project_name)
   for (directory in c("input", "R", "graphics", "output")) {
     dir.create(path = file.path(project_name, directory))
   }
-  for(rfile in c("load", "clean", "func", "do", "graphics")){
+  for (rfile in c("load", "clean", "func", "do", "graphics")) {
     fname = paste0(rfile, ".R")
     fpath = file.path(project_name, "R", fname)
     file.create(fpath)
     if (exists("code")) {
       print(exists("code"))
-      fileConn = file(fpath)
-      writeLines(code, fileConn)
-      close(fileConn)
+      file_conn = file(fpath)
+      writeLines(code, file_conn)
+      close(file_conn)
     }
     code = paste0('source("', fpath, '")')
   }
 }
 ```
-
 
 ## Solutions
 

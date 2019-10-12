@@ -1,20 +1,29 @@
-Package: jrProgramming
 Type: Package
+Package: jrProgramming
 Title: Jumping Rivers: Introduction to Programming
 Version: 0.1.9
-Authors@R: person("Colin", "Gillespie",
-     email="colin@jumpingrivers.com", 
-     role = c("aut", "cre"))
-Description: Introduction to Programming course material run by Jumping 
-      Rivers.
-URL: https://www.jumpingrivers.com/
+Authors@R: 
+    person(given = "Jumping",
+           family = "Rivers",
+           role = c("aut", "cre"),
+           email = "info@jumpingrivers.com")
+Description: Introduction to Programming course material run by
+    Jumping Rivers.
 License: GPL-3
+URL: https://www.jumpingrivers.com/
 Depends:
     R (>= 3.2.0)
 Imports:
-    ggplot2movies, dplyr, ggplot2, tibble
+    dplyr,
+    ggplot2,
+    ggplot2movies,
+    tibble
 Suggests:
-    knitr, tufte, rmarkdown, formatR
+    formatR,
+    knitr,
+    rmarkdown,
+    tufte
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
-VignetteBuilder: knitr
 RoxygenNote: 6.1.1
