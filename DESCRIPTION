@@ -1,7 +1,7 @@
 Type: Package
 Package: jrProgramming
 Title: Jumping Rivers: Introduction to Programming
-Version: 0.1.9
+Version: 0.2.0
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
@@ -18,6 +18,7 @@ Imports:
     ggplot2,
     ggplot2movies,
     tibble
+    readr
 Suggests:
     formatR,
     knitr,
