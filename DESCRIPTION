@@ -17,8 +17,8 @@ Imports:
     dplyr,
     ggplot2,
     ggplot2movies,
-    tibble,
-    readr
+    readr,
+    tibble
 Suggests:
     formatR,
     knitr,
