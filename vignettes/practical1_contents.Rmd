@@ -70,7 +70,7 @@ max_cols
     ```{r}
     means = numeric(ncol(dd))
     sds = numeric(ncol(dd))
-    for(i in seq_along(dd)) {
+    for (i in seq_along(dd)) {
       means[i] = mean(dd[, i])
       sds[i] = sd(dd[, i])
     }
