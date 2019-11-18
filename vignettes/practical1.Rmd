@@ -12,9 +12,6 @@ vignette: >
 ---
 
 ```{r echo=FALSE}
-# pfft old way to do things or what?
-# results = "hide"; echo = FALSE
-
 library(tufte)
 knitr::opts_chunk$set(results = "hide", echo = FALSE)
 # gets rid of all the echo = echo, results = results

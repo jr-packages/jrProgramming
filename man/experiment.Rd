@@ -12,10 +12,10 @@ data(experiment)
 A data frame
 }
 \description{
-This data frame dummy_data represents an experiment, 
+This data frame dummy_data represents an experiment,
 where we have ten treatments:
-A, B, ..., J and measurements at some time points. 
-We want to create a scatter plot of measurement against time, 
+A, B, ..., J and measurements at some time points.
+We want to create a scatter plot of measurement against time,
 for each treatment type.
 }
 \examples{
