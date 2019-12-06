@@ -13,8 +13,7 @@ opts_chunk$set(fig.path = "figure/graphics-",
 knit_hooks$set(crop = hook_pdfcrop)
 ```
 
-In this question, we are going to use a `for` statement to
-loop} over a large data set and construct some scatter plots. As a note, we could do a lot of this task using facets in **ggplot2**, but it is good practise for your for loop skills and as you'll see in some places using a for loop is benificial. To generate the data, run the following piece of R code
+In this question, we are going to use a `for` statement to loop over a large data set and construct some scatter plots. As a note, we could do a lot of this task using facets in **ggplot2**, but it is good practise for your for loop skills and as you'll see in some places using a for loop is benificial. To generate the data, run the following piece of R code
 
 ```{r echo=TRUE}
 data(experiment, package = "jrProgramming")
