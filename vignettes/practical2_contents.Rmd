@@ -101,7 +101,7 @@ argument, i.e. we can call `fun5(1,5)`.
     ```
 
 3. Change `fun5` so that it has default arguments of
-`a = 1` and `b = 10`.
+`a = 1` and `b = 10`. Try calling `fun5(5)`. Why do we get the answer outputted?
 
     ```{r }
     fun5 = function(a=1, b=10) {
