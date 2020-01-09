@@ -29,7 +29,7 @@ scatter plot of measurement against time, for each treatment type.
     ```{r F1, echo=TRUE, eval=TRUE, tidy=FALSE, message=FALSE, fig.keep="none"}
     library("dplyr")
     library("ggplot2")
-    treat_a = filter(exper, treat == "A")
+    treat_a = filter(experiment, treat == "A")
     ggplot(treat_a, aes(x = time, y = values)) +
       geom_point()
     ``` 
@@ -40,18 +40,18 @@ treatment types:
 
     ```{r echo=FALSE}
     treatment = tail(exper, 1)$treat
-    group = filter(exper, treat == treatment)
+    group = filter(experiment, treat == treatment)
     ```
     ```{r results='hide', fig.keep='none', tidy=FALSE, echo = TRUE, eval=FALSE}
-    for (treatment in unique(exper$treat)) {
-      group = filter(exper, treat == treatment)
+    for (treatment in unique(experiment$treat)) {
+      group = filter(experiment, treat == treatment)
       g = ggplot(group, aes(x = time, y = values)) +
         geom_point()
       print(g)
       readline("Hit return for next plot")
     }
     ``` 
-    * What does `unique(exper$treat)` give?
+    * What does `unique(experiment$treat)` give?
         ```{r}
         ## It gives all treatments.
         ```
@@ -119,7 +119,7 @@ to fix the range, like below, but using better y-limits. __Hint__: Work out the 
     ```
 
     ```{r  fig.keep='none', tidy=FALSE}
-    r = range(exper$values)
+    r = range(experiment$values)
     ggplot(group, aes(x = time, y = values)) +
       geom_point() +
       xlab("Time") +
@@ -147,7 +147,7 @@ larger than the mean + standard deviations or less than the mean -
     ```
   
     ```{r fig.keep='none', message=FALSE, tidy=FALSE}
-    r = range(exper$values)
+    r = range(experiment$values)
     g = ggplot(group, aes(x = time, y = values)) +
       geom_point() +
       xlab("Time") +
