@@ -17,7 +17,7 @@ In this question, we are going to use a `for` statement to loop over a large dat
 
 ```{r echo=TRUE}
 data(experiment, package = "jrProgramming")
-head(exper)
+head(experiment)
 ``` 
 
 The data frame `exper` represents an experiment, where we have ten treatments:
