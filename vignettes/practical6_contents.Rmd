@@ -20,7 +20,7 @@ The algorithm we will use is:
    
 4. Go back to step 2.
 
-After rolling the dice 100,000 times or so, stop.
+\noindent After rolling the dice 100,000 times or so, stop.
 
 # Dice Rolling
 
@@ -30,7 +30,7 @@ When we roll a single die, each side has an equal probability of occurring. This
 sample(1:6, 1)
 ```
 
-To roll two dice, we simply call this function:
+\noindent To roll two dice, we simply call this function:
 
 ```{r, echo=TRUE}
 RollTwoDice = function() {
@@ -41,15 +41,15 @@ return(total)
 
 ## The Monopoly board
 
-In monopoly there are forty properties or squares, see table \ref{T_1} at the end of this practical for a complete list. If we set the first square ‘Go’ to be number 1, then we can represent all forty squares as a vector in R. For example
+In Monopoly there are forty properties or squares, see table \ref{T_1} at the end of this practical for a complete list. If we set the first square ‘Go’ to be number 1, then we can represent all forty squares as a vector in R. For example
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, tidy = FALSE}
 ## This creates a vector of 40 values;
 ## All values are initially zero
 landings = numeric(40)
 ```
 
-Then, when we land on a square we simply increase the associated
+\noindent Then, when we land on a square we simply increase the associated
 `landings` entry by one. Suppose we landed on ‘Old Kent Rd’, we
 would represent this as:
 
@@ -57,13 +57,13 @@ would represent this as:
 landings[2] = landings[2] + 1
 ```
 
-since ‘Old Kent Road’ is square 2 (see table \ref{T_1}).
+\noindent since ‘Old Kent Road’ is square 2 (see table \ref{T_1}).
 
 ## Going round the board
 
 Our first go at simulating Monopoly will ignore community chest,
 chance cards, and the ‘Go To Jail’ square. This means that we are
-simply going round the board. The code in the `SimulateMonopoly`
+simply going round the board. The code in the `SimulateMonopoly()`
 function, rolls the dice `no_of_rolls` time, and stores the squares that
 are landed on in the vector `landings`.
 
@@ -76,30 +76,30 @@ SimulateMonopoly = function(no_of_rolls) {
     current = current + RollTwoDice()
     if (current > 40) {
       current = current - 40
-      }
-    landings[current] = landings[current] + 1
     }
+    landings[current] = landings[current] + 1
+  }
   return(landings)
 }
 no_of_rolls = 50000
 ```
 
-We can then call the function using:
+\noindent We can then call the function using:
 
 ```{r, echo=TRUE}
 sim = SimulateMonopoly(no_of_rolls)
 ```
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 # no_of_rolls = 2000000
 # sim1 = SimulateMonopoly(no_of_rolls)
 # saveRDS(sim1, file="vignettes/sim1.RData")
 sim = readRDS("sim1.RData")
 ```
 
-We can then plot the results
+\noindent We can then plot the results
 
-```{r, echo=TRUE, fig.keep='none'}
+```{r, echo=TRUE, fig.keep='none', tidy = FALSE}
 library("ggplot2")
 library("tibble")
 monopoly = tibble(index = seq_along(sim), sim = sim / sum(sim))
@@ -122,17 +122,17 @@ CommunityChest = function(current) {
   u = runif(1)
   if (u < 1 / 16) {
     goto = 1 #Move to Go
-    } else if (u < 2 / 16) {
-      goto = 11 #Go To Jail :(
-      }
+  } else if (u < 2 / 16) {
+    goto = 11 #Go To Jail :(
+  }
   return(goto)
 }
 ```
 
-This function takes in the `current` position, with probability 1/16
+\noindent This function takes in the `current` position, with probability 1/16
 we ‘Move to Go’, with probability 1/16 we ‘Go to Jail’ and with
 probability 14/16 we stay in our current position. We now alter the
-`SimulateMonopoly()` function to incorporate the `CommunityChest` function:
+`SimulateMonopoly()` function to incorporate the `CommunityChest()` function:
 
 ```{r, echo=TRUE}
 SimulateMonopoly = function(no_of_rolls) {
@@ -143,16 +143,16 @@ SimulateMonopoly = function(no_of_rolls) {
     current = current + RollTwoDice()
     if (current > 40) {
       current = current - 40
-      }
+    }
     landings[current] = landings[current] + 1
     if (current == 3) {
       cc_move = CommunityChest(current)
       if (cc_move != current) {
         current = cc_move
         landings[current] = landings[current] + 1
-        }
       }
     }
+  }
   return(landings)
 }
 ```
@@ -163,16 +163,16 @@ SimulateMonopoly = function(no_of_rolls) {
 sim2 = SimulateMonopoly(no_of_rolls)
 ```
 
-```{r, echo=TRUE}
+```{r, echo=FALSE}
 # no_of_rolls = 2000000
 # sim2 = SimulateMonopoly(no_of_rolls)
 # saveRDS(sim2, file="vignettes/sim2.RData")
 sim2 = readRDS("sim2.RData")
 ```
 
-and plot
+\noindent and plot
 
-```{r, echo=TRUE, fig.keep='none'}
+```{r, echo=TRUE, fig.keep='none', tidy = FALSE}
 monopoly2 = tibble(index = seq_along(sim2),
                    sim = sim2 / sum(sim2))
 ggplot(monopoly2) + 
@@ -181,7 +181,7 @@ ggplot(monopoly2) +
   labs(x = "Square", y = "Probability")
 ```
 
-What is the rationale for lines 14-20?
+\noindent What is the rationale for lines 14-20?
 
 # Additional questions
 
@@ -207,7 +207,7 @@ UpdateStateVector = function(current, move, landings) {
 ```
 
 1. Add in the two other community squares, i.e. squares 18 and 34
-into the `SimulateMonopoly` code.
+into the `SimulateMonopoly()` code.
 
 ```{r}
 SimulateMonopoly = function(no_of_turns) {
@@ -224,8 +224,7 @@ SimulateMonopoly = function(no_of_turns) {
       landings = UpdateStateVector(move, current, landings)
       current = move
     }
-    if (current == 3 |
-        current == 18 | current == 34) {
+    if (current == 3 | current == 18 | current == 34) {
       #Community Chest
       move = CommunityChest(current)
       landings = UpdateStateVector(move, current, landings)
@@ -272,8 +271,7 @@ SimulateMonopoly = function(no_of_turns) {
       landings = UpdateStateVector(move, current, landings)
       current = move
     }
-    if (current == 3 |
-        current == 18 | current == 34) {
+    if (current == 3 | current == 18 | current == 34) {
       #Community Chest
       move = CommunityChest(current)
       landings = UpdateStateVector(move, current, landings)
@@ -374,6 +372,8 @@ Chance = function(current) {
   return(goto)
 }
 ```
+
+\newpage
 
 # Additional Information
 
