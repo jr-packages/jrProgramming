@@ -330,7 +330,7 @@ simulate_monopoly = function(no_of_turns) {
 }
 ```
 
-```{r, fig.cap="Distribution of resting places in a game of monopoly using `no_of_turns` rolls.", echo = FALSE, out.width="60%", out.height="60%"}
+```{r, fig.cap="Hi", echo = FALSE, out.width="0.8\\textwidth", out.height="60%", fig.pos="!h", fig.align='center'}
 knitr::include_graphics("example_distribution.png")
 ```
 

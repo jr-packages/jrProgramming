@@ -1,6 +1,8 @@
 ---
 title: "Practical 6 solutions"
 author: "Jumping Rivers"
+header-includes:
+  - \usepackage{float}
 output: 
   tufte::tufte_handout:
     latex_engine: xelatex
