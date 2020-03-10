@@ -99,7 +99,7 @@ sim = readRDS("sim1.RData")
 
 \noindent We can then plot the results
 
-```{r, echo=TRUE, fig.keep='none', tidy = FALSE}
+```{r, echo=TRUE, fig.keep='all', fig.margin=TRUE, tidy = FALSE}
 library("ggplot2")
 library("tibble")
 monopoly = tibble(index = seq_along(sim), sim = sim / sum(sim))
@@ -172,7 +172,7 @@ sim2 = readRDS("sim2.RData")
 
 \noindent and plot
 
-```{r, echo=TRUE, fig.keep='none', tidy = FALSE}
+```{r, echo=TRUE, fig.keep='all', fig.margin=TRUE, tidy = FALSE}
 monopoly2 = tibble(index = seq_along(sim2),
                    sim = sim2 / sum(sim2))
 ggplot(monopoly2) + 
