@@ -3,7 +3,6 @@
 \docType{data}
 \name{experiment}
 \alias{experiment}
-\alias{exper}
 \title{Experiment data set}
 \usage{
 data(experiment)

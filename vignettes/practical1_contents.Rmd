@@ -3,9 +3,11 @@
 This question contains some maths equations. If you're unsure about summations either ask your presenter or skip this question. We're not bothered about your maths theory skills, just your R skills!
 
 ```{r results="hide", echo=TRUE}
-european_countries = c("England", "Germany", "France", "Switzerland", "Spain", "Italy", "Boznia and Herzegovina", "Croatia", "Montenegro", "Sweden")
-for(i in european_countries) {
-    print(paste("The country" , i, "consists of", nchar(i), "characters."))
+european_countries = c("England", "Germany", "France", "Switzerland",
+                       "Spain", "Italy", "Boznia and Herzegovina",
+                       "Croatia", "Montenegro", "Sweden")
+for (i in european_countries) {
+    print(paste("The country", i, "consists of", nchar(i), "characters."))
 }
 ``` 
 
@@ -16,8 +18,8 @@ The `for` loop above gives us information on the number of letters in a selectio
 2. Change the above loop, such that we only find out the number of letters in the word Montenegro. Hint: use the square bracket notation, `[]`.
 
     ```{r}
-    for(i in european_countries[9]) {
-      print(paste("The country" , i, "consists of", nchar(i),
+    for (i in european_countries[9]) {
+      print(paste("The country", i, "consists of", nchar(i),
                   "characters."))
     }
     ```
@@ -25,8 +27,8 @@ The `for` loop above gives us information on the number of letters in a selectio
 3. Rewrite the for loop, such that we find out the number of letters in the first 5 countries.
 
     ```{r}
-    for(i in european_countries[1:5]) {
-      print(paste("The country" , i, "consists of", nchar(i),
+    for (i in european_countries[1:5]) {
+      print(paste("The country", i, "consists of", nchar(i),
                   "characters."))
     }
     ```
@@ -34,8 +36,8 @@ The `for` loop above gives us information on the number of letters in a selectio
 4. Harder: Try and change the for loop so that the sentences are ordered alphabetically by country.
 
     ```{r}
-    for(i in sort(european_countries)) {
-      print(paste("The country" , i, "consists of", nchar(i),
+    for (i in sort(european_countries)) {
+      print(paste("The country", i, "consists of", nchar(i),
                   "characters."))
     }
     ```
