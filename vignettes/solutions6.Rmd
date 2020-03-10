@@ -1,0 +1,23 @@
+---
+title: "Practical 6 solutions"
+author: "Jumping Rivers"
+header-includes:
+  - \usepackage{float}
+output: 
+  tufte::tufte_handout:
+    latex_engine: xelatex
+  tufte::tufte_html: default
+vignette: >
+  %\VignetteIndexEntry{solutions6}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+
+```{r include = FALSE}
+knitr::opts_chunk$set(results = "show", echo = TRUE)
+```
+
+
+```{r child = 'practical6_contents.Rmd'}
+```
