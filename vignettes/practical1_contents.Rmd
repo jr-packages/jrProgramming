@@ -7,7 +7,7 @@ european_countries = c("England", "Germany", "France", "Switzerland",
                        "Spain", "Italy", "Boznia and Herzegovina",
                        "Croatia", "Montenegro", "Sweden")
 for (i in european_countries) {
-    print(paste("The country", i, "consists of", nchar(i), "characters."))
+    message(paste("The country", i, "consists of", nchar(i), "characters."))
 }
 ``` 
 
@@ -19,7 +19,7 @@ The `for` loop above gives us information on the number of letters in a selectio
 
     ```{r}
     for (i in european_countries[9]) {
-      print(paste("The country", i, "consists of", nchar(i),
+      message(paste("The country", i, "consists of", nchar(i),
                   "characters."))
     }
     ```
@@ -28,7 +28,7 @@ The `for` loop above gives us information on the number of letters in a selectio
 
     ```{r}
     for (i in european_countries[1:5]) {
-      print(paste("The country", i, "consists of", nchar(i),
+      message(paste("The country", i, "consists of", nchar(i),
                   "characters."))
     }
     ```
@@ -37,7 +37,7 @@ The `for` loop above gives us information on the number of letters in a selectio
 
     ```{r}
     for (i in sort(european_countries)) {
-      print(paste("The country", i, "consists of", nchar(i),
+      message(paste("The country", i, "consists of", nchar(i),
                   "characters."))
     }
     ```

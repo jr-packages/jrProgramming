@@ -240,14 +240,14 @@ cards. When you land on a Chance square, call this function.
 roll_two_dice_with_doubles = function(current) {
   df = data.frame(d1 = sample(1:6, 3, replace = TRUE),
                   d2 = sample(1:6, 3, replace = TRUE))
-  df$Total = apply(df, 1, sum)
-  df$IsDouble = df$d1 == df$d2
-  if (df$IsDouble[1] & df$IsDouble[2] & df$IsDouble[3]) {
+  df$total = apply(df, 1, sum)
+  df$is_double = df$d1 == df$d2
+  if (df$is_Double[1] & df$is_double[2] & df$is_double[3]) {
     current = 11#Go To Jail
-  } else if (df$IsDouble[1] & df$IsDouble[2]) {
-    current = current + sum(df$Total[1:2])
+  } else if (df$is_double[1] & df$is_double[2]) {
+    current = current + sum(df$total[1:2])
   } else {
-    current = current + df$Total[1]
+    current = current + df$total[1]
   }
   return(current)
 }
@@ -330,7 +330,7 @@ simulate_monopoly = function(no_of_turns) {
 }
 ```
 
-```{r, fig.cap="Distribution of resting places in a game of monopoly.", echo = FALSE, out.width="0.8\\textwidth", out.height="60%", fig.pos="!h", fig.align='center'}
+```{r, fig.cap="Distribution of resting places in a game of monopoly using 50,000 rolls", echo = FALSE, out.width="0.8\\textwidth", out.height="60%", fig.pos="!h", fig.align='center'}
 knitr::include_graphics("example_distribution.png")
 ```
 
