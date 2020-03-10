@@ -33,7 +33,7 @@ sample(1:6, 1)
 \noindent To roll two dice, we simply call this function:
 
 ```{r, echo=TRUE}
-RollTwoDice = function() {
+roll_two_dice = function() {
 total = sample(1:6, 1) + sample(1:6, 1)
 return(total)
 }
@@ -63,17 +63,17 @@ landings[2] = landings[2] + 1
 
 Our first go at simulating Monopoly will ignore community chest,
 chance cards, and the ‘Go To Jail’ square. This means that we are
-simply going round the board. The code in the `SimulateMonopoly()`
+simply going round the board. The code in the `simulate_monopoly()`
 function, rolls the dice `no_of_rolls` time, and stores the squares that
 are landed on in the vector `landings`.
 
 ```{r, echo=TRUE}
-SimulateMonopoly = function(no_of_rolls) {
+simulate_monopoly = function(no_of_rolls) {
   landings = numeric(40)
   ## Start at GO
   current = 1
   for (i in 1:no_of_rolls) {
-    current = current + RollTwoDice()
+    current = current + roll_two_dice()
     if (current > 40) {
       current = current - 40
     }
@@ -87,7 +87,7 @@ no_of_rolls = 50000
 \noindent We can then call the function using:
 
 ```{r, echo=TRUE}
-sim = SimulateMonopoly(no_of_rolls)
+sim = simulate_monopoly(no_of_rolls)
 ```
 
 ```{r, echo=FALSE}
@@ -117,7 +117,7 @@ card is 1/16. In the code below we will **only implement the first two
 community chest cards:**
 
 ```{r, echo=TRUE}
-CommunityChest = function(current) {
+community_chest = function(current) {
   goto = current
   u = runif(1)
   if (u < 1 / 16) {
@@ -132,21 +132,21 @@ CommunityChest = function(current) {
 \noindent This function takes in the `current` position, with probability 1/16
 we ‘Move to Go’, with probability 1/16 we ‘Go to Jail’ and with
 probability 14/16 we stay in our current position. We now alter the
-`SimulateMonopoly()` function to incorporate the `CommunityChest()` function:
+`simulate_monopoly()` function to incorporate the `community_chest()` function:
 
 ```{r, echo=TRUE}
-SimulateMonopoly = function(no_of_rolls) {
+simulate_monopoly = function(no_of_rolls) {
   landings = numeric(40)
   ## Start at GO
   current = 1
   for (i in 1:no_of_rolls) {
-    current = current + RollTwoDice()
+    current = current + roll_two_dice()
     if (current > 40) {
       current = current - 40
     }
     landings[current] = landings[current] + 1
     if (current == 3) {
-      cc_move = CommunityChest(current)
+      cc_move = community_chest(current)
       if (cc_move != current) {
         current = cc_move
         landings[current] = landings[current] + 1
@@ -160,7 +160,7 @@ SimulateMonopoly = function(no_of_rolls) {
 \noindent{We can then call this function:}
 
 ```{r, echo=TRUE}
-sim2 = SimulateMonopoly(no_of_rolls)
+sim2 = simulate_monopoly(no_of_rolls)
 ```
 
 ```{r, echo=FALSE}
@@ -189,7 +189,7 @@ Each question adds an additional layer of complexity to your code. The code belo
 
 ```{r}
 ##Helper function to avoid code replication
-CheckState = function(current) {
+check_state = function(current) {
   if (current > 40) {
     current = current - 40
   } else if (current < 1) {
@@ -198,7 +198,7 @@ CheckState = function(current) {
   return(current)
 }
 
-UpdateStateVector = function(current, move, landings) {
+update_state_vector = function(current, move, landings) {
   if (move != current) {
     landings[current] = landings[current] + 1
   }
@@ -207,88 +207,13 @@ UpdateStateVector = function(current, move, landings) {
 ```
 
 1. Add in the two other community squares, i.e. squares 18 and 34
-into the `SimulateMonopoly()` code.
+into the `simulate_monopoly()` code.
 
-```{r}
-SimulateMonopoly = function(no_of_turns) {
-  landings = numeric(40)
-  ##Start GO
-  current = 1
-  for (i in 1:no_of_turns) {
-    current = RollTwoDiceWithDoubles(current)
-    current = CheckState(current)
-    landings = UpdateStateVector(current, -1, landings)
-    if (current == 8 | current == 23 | current == 37) {
-      #Chance
-      move = Chance(current)
-      landings = UpdateStateVector(move, current, landings)
-      current = move
-    }
-    if (current == 3 | current == 18 | current == 34) {
-      #Community Chest
-      move = CommunityChest(current)
-      landings = UpdateStateVector(move, current, landings)
-      current = move
-    }
-  }
-  return(landings)
-}
-```
+2. Add in ‘Go to Old Kent Road’ into your `community_chest()` function.
 
-2. Add in ‘Go to Old Kent Road’ into your `CommunityChest()` function.
+3. Square 31 is ‘Go To Jail.’ Implement this in your main `simulate_monopoly()` function.
 
-```{r}
-CommunityChest = function(current) {
-  u = runif(1)
-  goto = current #Default. Do nothing
-  if (u < 1 / 16) {
-    goto = 1 #Go
-  } else if (u < 2 / 16) {
-    goto = 11 #Jail
-  } else if (u < 3 / 16) {
-    goto = 2 #Old Kent Rd
-  } else if (u < 4 / 16) {
-    goto = Chance(current)
-  }
-  return(goto)
-}
-```
-
-3. Square 31 is ‘Go To Jail.’ Implement this in your main `SimulateMonopoly()` function.
-
-```{r}
-SimulateMonopoly = function(no_of_turns) {
-  landings = numeric(40)
-  ##Start GO
-  current = 1
-  for (i in 1:no_of_turns) {
-    current = RollTwoDiceWithDoubles(current)
-    current = CheckState(current)
-    landings = UpdateStateVector(current, -1, landings)
-    if (current == 8 | current == 23 | current == 37) {
-      #Chance
-      move = Chance(current)
-      landings = UpdateStateVector(move, current, landings)
-      current = move
-    }
-    if (current == 3 | current == 18 | current == 34) {
-      #Community Chest
-      move = CommunityChest(current)
-      landings = UpdateStateVector(move, current, landings)
-      current = move
-    }
-    ##Go To Jail. Chance could also send you here by
-    ##going back three places
-    if (current == 31) {
-      current = 11
-      landings = UpdateStateVector(current, -1, landings)
-    }
-  }
-  return(landings)
-}
-```
-
-4. Create a `Chance()` function, that implements the first six Chance
+4. Create a `chance()` function, that implements the first six Chance
 cards. When you land on a Chance square, call this function.
 
 5. Add in Community Chest card four.
@@ -310,8 +235,9 @@ cards. When you land on a Chance square, call this function.
     (d) If roll three is a double, Go To Jail, otherwise move
     `total_score`
 
+
 ```{r}
-RollTwoDiceWithDoubles = function(current) {
+roll_two_dice_with_doubles = function(current) {
   df = data.frame(d1 = sample(1:6, 3, replace = TRUE),
                   d2 = sample(1:6, 3, replace = TRUE))
   df$Total = apply(df, 1, sum)
@@ -329,7 +255,7 @@ RollTwoDiceWithDoubles = function(current) {
 
 ```{r}
 # Answers for community chest and chance questions
-CommunityChest = function(current) {
+community_chest = function(current) {
   u = runif(1)
   goto = current #Default. Do nothing
   if (u < 1 / 16) {
@@ -339,12 +265,12 @@ CommunityChest = function(current) {
   } else if (u < 3 / 16) {
     goto = 2 #Old Kent Rd
   } else if (u < 4 / 16) {
-    goto = Chance(current)
+    goto = chance(current)
   }
   return(goto)
 }
 
-Chance = function(current) {
+chance = function(current) {
   u = runif(1)
   goto = current #Default. Do nothing
   if (u < 1 / 16) {
@@ -360,7 +286,7 @@ Chance = function(current) {
   } else if (u < 6 / 16) {
     goto = 40 #Mayfair
   } else if (u < 7 / 16) {
-    goto = CheckState(current - 3) #Must check, since goto maybe negative!
+    goto = check_state(current - 3) #Must check, since goto maybe negative!
   } else if (u < 8 / 16) {
     if (current > 29
         | current < 13) {
@@ -370,6 +296,37 @@ Chance = function(current) {
     }
   }
   return(goto)
+}
+```
+```{r}
+simulate_monopoly = function(no_of_turns) {
+  landings = numeric(40)
+  ##Start GO
+  current = 1
+  for (i in 1:no_of_turns) {
+    current = roll_two_dice_with_doubles(current)
+    current = check_state(current)
+    landings = update_state_vector(current, -1, landings)
+    if (current == 8 | current == 23 | current == 37) {
+      #Chance
+      move = chance(current)
+      landings = update_state_vector(move, current, landings)
+      current = move
+    }
+    if (current == 3 | current == 18 | current == 34) {
+      #Community Chest
+      move = community_chest(current)
+      landings = update_state_vector(move, current, landings)
+      current = move
+    }
+    ##Go To Jail. Chance could also send you here by
+    ##going back three places
+    if (current == 31) {
+      current = 11
+      landings = update_state_vector(current, -1, landings)
+    }
+  }
+  return(landings)
 }
 ```
 
