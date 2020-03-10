@@ -1,6 +1,6 @@
 # Programming: Practical 6
 
-\noindent{We wish to determine the properties on which a player is most likely to land during a game of monopoly. To simplify things, we assume there is only a single player, ignore everything to do with money and also ignore the `Get out of Jail Free Cards'.}
+\noindent{We wish to determine the properties on which a player is most likely to land during a game of Monopoly. To simplify things, we assume there is only a single player, ignore everything to do with money and also ignore the `Get out of Jail Free Cards'.}
 
 # Monopoly: overview of the problem
 
@@ -99,7 +99,7 @@ sim = readRDS("sim1.RData")
 
 \noindent We can then plot the results
 
-```{r, echo=TRUE, fig.keep='all', fig.margin=TRUE, tidy = FALSE}
+```{r, echo=TRUE, fig.keep='all', fig.margin=TRUE, fig.cap="Probability of landing on a Monopoly square.", tidy = FALSE}
 library("ggplot2")
 library("tibble")
 monopoly = tibble(index = seq_along(sim), sim = sim / sum(sim))
@@ -172,7 +172,7 @@ sim2 = readRDS("sim2.RData")
 
 \noindent and plot
 
-```{r, echo=TRUE, fig.keep='all', fig.margin=TRUE, tidy = FALSE}
+```{r, echo=TRUE, fig.keep='all', fig.margin=TRUE, fig.cap="Probability of landing on Monopoly square with the first community chest card implemented. Incorporating a single cummunity chest card has very little effect. For this graphic, I used 2 million simulations!", tidy = FALSE}
 monopoly2 = tibble(index = seq_along(sim2),
                    sim = sim2 / sum(sim2))
 ggplot(monopoly2) + 
