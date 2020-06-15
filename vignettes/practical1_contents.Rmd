@@ -1,58 +1,42 @@
 ## Question 1
 
-This question contains some maths equations, in particular two summations. If you're unsure about summations either ask your presenter or skip this question. We're not bothered about your maths theory skills, just your R skills!
-
 ```{r results="hide", echo=TRUE}
-total = 0
-for (i in 1:5) {
-  total = total + i
+european_countries = c("England", "Germany", "France", "Switzerland",
+                       "Spain", "Italy", "Boznia and Herzegovina",
+                       "Croatia", "Montenegro", "Sweden")
+for (i in european_countries) {
+    message(paste("The country", i, "consists of", nchar(i), "characters."))
 }
-total
 ``` 
 
-The `for` loop above calculates 
-\[
-\sum_{i=1}^5 i = 1 + 2 + 3 + 4 + 5
-\]
+The `for` loop above gives us information on the number of letters in a selection of ten European countries.
 
-1. What is the final value of `total` in the above piece of code?
-    ```{r }
-    total
-    ```
-2. Change the above loop to calculate the following summations:
-    \[
-\mbox{(i)} \sum_{i=1}^{20} (i+1)  
-\]
-    ```{r}
-    total = 0
-    for (i in 1:20) {
-      total = total + (i + 1)
-    }
-    total
-    ```
-\[
-\mbox{(ii)} \sum_{j=-10}^{15} j 
-\]
-    ```{r}
-    total = 0
-    for (j in -10:15) {
-      total = total + j
-    }
-    total
-    ```
+1. Try and run the `for` loop yourself.
+
+``
     
-3. Rewrite the two loops using the `sum()` function. For example, the for loop in the first
-example can be written as `sum(1:5)`
+3. Rewrite the for loop, such that we find out the number of letters in the first 5 countries.
 
     ```{r}
-    sum(2:21)
-    sum(-10:15)
+    for (i in european_countries[1:5]) {
+      message(paste("The country", i, "consists of", nchar(i),
+                  "characters."))
+    }
+    ```
+
+4. Harder: Try and change the for loop so that the sentences are ordered alphabetically by country.
+
+    ```{r}
+    for (i in sort(european_countries)) {
+      message(paste("The country", i, "consists of", nchar(i),
+                  "characters."))
+    }
     ```
 
 ## Question 2
 
 In the notes, we observed that it was straight forward to
-loop through a data set set and select the maximum values:
+loop through a data set and select the maximum values:
 
 ```{r echo=TRUE}
 library("tibble")
@@ -75,7 +59,7 @@ max_cols
     ```{r}
     means = numeric(ncol(dd))
     sds = numeric(ncol(dd))
-    
+
     for (i in seq_along(dd)) {
       means[i] = mean(dd[[i]])
       sds[i] = sd(dd[[i]])

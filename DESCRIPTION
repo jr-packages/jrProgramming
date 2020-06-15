@@ -1,7 +1,7 @@
 Type: Package
 Package: jrProgramming
 Title: Jumping Rivers: Introduction to Programming
-Version: 0.2.1
+Version: 0.2.7
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
@@ -27,4 +27,8 @@ Suggests:
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
+<<<<<<< HEAD
 RoxygenNote: 7.1.0
+=======
+RoxygenNote: 7.0.2
+>>>>>>> e1fd06630f8eb099678f631582166098bb570cc6

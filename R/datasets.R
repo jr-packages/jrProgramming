@@ -6,7 +6,6 @@
 #' We want to create a scatter plot of measurement against time,
 #' for each treatment type.
 #' @name experiment
-#' @aliases exper
 #' @docType data
 #' @usage data(experiment)
 #' @return A data frame
