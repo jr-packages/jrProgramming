@@ -27,8 +27,5 @@ Suggests:
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-<<<<<<< HEAD
+
 RoxygenNote: 7.1.0
-=======
-RoxygenNote: 7.0.2
->>>>>>> e1fd06630f8eb099678f631582166098bb570cc6
