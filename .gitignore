@@ -8,6 +8,9 @@
 
 # Session Data files
 .RData
+.Ruserdata
+.Renviron
+.DS_Store
 
 # Example code in package build process
 *-Ex.R
