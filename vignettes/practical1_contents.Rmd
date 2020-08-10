@@ -1,15 +1,15 @@
 ## Question 1
 
-Re-order the lines of code below to create a for loop!
+Re-order the lines of code below to create a `for` loop!
+ 
+1. `message(day)`
 
-    1. message(day)
+2. `days = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")`
 
-    2. days = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",                        "Sunday")
+3. `}` 
 
-    3. } 
-
-    4. for (day in days) {
-
+4. `for (day in days) {`
+    
 ```{r, eval=FALSE}
 days = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 for (day in days) {
@@ -17,7 +17,7 @@ for (day in days) {
 }
 ```
 
-\noindent{Try changing "day" to "i" wherever "day" is seen. Does it change the output? Explain why}
+\noindent{Try changing \texttt{day} to \texttt{i} wherever \texttt{day} is seen. Does it change the output? Explain why}
 
 ```{r}
 # The output will remain the same as the iterator, which acts as a placeholder for the
