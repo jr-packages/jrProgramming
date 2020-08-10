@@ -17,7 +17,7 @@ for (day in days) {
 }
 ```
 
-\noindent{Try changing \texttt{day} to \texttt{i} wherever \texttt{day} is seen. Does it change the output? Explain why}
+\noindent Try changing `day` to `i` wherever `day` is seen. Does it change the output? Explain why
 
 ```{r}
 # The output will remain the same as the iterator, which acts as a placeholder for the
