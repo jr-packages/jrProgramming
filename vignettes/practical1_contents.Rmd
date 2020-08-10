@@ -8,11 +8,11 @@ Re-order the lines of code below to create a for loop!
 
     3. } 
 
-    4. for(day in days) {
+    4. for (day in days) {
 
 ```{r, eval=FALSE}
 days = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-for(day in days) {
+for (day in days) {
   message(day)
 }
 ```
@@ -20,7 +20,9 @@ for(day in days) {
 \noindent{Try changing "day" to "i" wherever "day" is seen. Does it change the output? Explain why}
 
 ```{r}
-# The output will remain the same as the iterator, which acts as a placeholder for the iterator values in the vector, days, is being kept consistent throughout the body of the for loop.
+# The output will remain the same as the iterator, which acts as a placeholder for the
+# iterator values in the vector, days, is being kept consistent throughout the body of the
+# for loop.
 ```
 
 ## Question 2
