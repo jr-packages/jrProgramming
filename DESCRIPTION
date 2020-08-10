@@ -1,11 +1,7 @@
 Type: Package
 Package: jrProgramming
 Title: Jumping Rivers: Introduction to Programming
-<<<<<<< HEAD
-Version: 0.2.7
-=======
 Version: 0.2.8
->>>>>>> master
 Authors@R: 
     person(given = "Jumping",
            family = "Rivers",
