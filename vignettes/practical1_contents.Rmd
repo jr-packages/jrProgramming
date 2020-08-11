@@ -1,37 +1,29 @@
 ## Question 1
 
-```{r results="hide", echo=TRUE}
-european_countries = c("England", "Germany", "France", "Switzerland",
-                       "Spain", "Italy", "Boznia and Herzegovina",
-                       "Croatia", "Montenegro", "Sweden")
-for (i in european_countries) {
-    message(paste("The country", i, "consists of", nchar(i), "characters."))
-}
-``` 
+Re-order the lines of code below to create a `for` loop!
+ 
+1. `message(day)`
 
-The `for` loop above gives us information on the number of letters in a selection of ten European countries.
+2. `days = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")`
 
-1. Try and run the `for` loop yourself.
+3. `}` 
 
-``
+4. `for (day in days) {`
     
-3. Rewrite the for loop, such that we find out the number of letters in the first 5 countries.
+```{r, eval=FALSE}
+days = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+for (day in days) {
+  message(day)
+}
+```
 
-    ```{r}
-    for (i in european_countries[1:5]) {
-      message(paste("The country", i, "consists of", nchar(i),
-                  "characters."))
-    }
-    ```
+\noindent Try changing `day` to `i` wherever `day` is seen. Does it change the output? Explain why
 
-4. Harder: Try and change the for loop so that the sentences are ordered alphabetically by country.
-
-    ```{r}
-    for (i in sort(european_countries)) {
-      message(paste("The country", i, "consists of", nchar(i),
-                  "characters."))
-    }
-    ```
+```{r}
+# The output will remain the same as the iterator, which acts as a placeholder for the
+# iterator values in the vector, days, is being kept consistent throughout the body of the
+# for loop.
+```
 
 ## Question 2
 
